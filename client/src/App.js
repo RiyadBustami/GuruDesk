@@ -1,11 +1,14 @@
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import Main from './views/Main';
+import SignIn from './views/SignIn';
+import SignUp from './views/SignUp';
 
 function App() {
   return (
-    <div className="App">
-      <Main/>
-    </div>
+    <Routes>
+      <Route path="/login" element={<SignIn/>}></Route>
+      <Route path="/registration" element={<SignUp/>}></Route>
+    </Routes>
   );
 }
 
