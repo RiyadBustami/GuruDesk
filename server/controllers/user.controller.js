@@ -1,6 +1,7 @@
 const { request, response } = require('express');
 const { User } = require('../models/user.model');
 const jwt = require("jsonwebtoken");
+const bcrypt = require('bcrypt');
 
 module.exports.createUser = (request, response) => {
     User.create(request.body)
@@ -41,7 +42,7 @@ module.exports.register = (request, response) => {
             }, process.env.SECRET_KEY);
 
             response
-                .cookie("usertoken", userToken, secret, {
+                .cookie("usertoken", userToken, process.env.SECRET_KEY, {
                     httpOnly: true
                 })
                 .json({ msg: "Registered successfully!", user: user });
@@ -67,7 +68,7 @@ module.exports.login = async (request, response) => {
     }, process.env.SECRET_KEY);
 
     response
-        .cookie("usertoken", userToken, secret, {
+        .cookie("usertoken", userToken, process.env.SECRET_KEY, {
             httpOnly: true
         })
         .json({ msg: "Logged in successfully!" });
