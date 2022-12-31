@@ -1,18 +1,16 @@
 import React from 'react'
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {ReactComponent as Logo} from '../images/gurudesklogo.svg';
+import axios from 'axios';
+import { useState } from 'react';
 
 function Copyright(props) {
     return (
@@ -30,6 +28,76 @@ function Copyright(props) {
 const theme = createTheme();
 
 const SignUp = () => {
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [errors, setErrors] = useState([]);
+    const [fNameError, setFNameError] = useState("");
+    const [lNameError, setLNameError] = useState("");
+    const [emailError, setEmailError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+    const [confirmPWError, setConfirmPWError] = useState("");
+
+    const register = e => {
+        e.preventDefault();
+        axios.post('http://localhost:8000/api/register', {
+            firstName,
+            lastName,
+            email,
+            password,
+            confirmPassword
+        })
+        .then(res=>console.log(res.data))
+        .catch(err=>console.log(err))
+    }
+
+    const handleFirstName = (e) => {
+        if(e.target.value.length<2 && e.target.value.length>0){
+            setFNameError("First Name must be at least 2 characters")
+        } else {
+            setFNameError("");
+            setFirstName(e.target.value);
+        }
+    }
+
+    const handleLastName = (e) => {
+        if(e.target.value.length<2 && e.target.value.length>0){
+            setLNameError("Last Name must be at least 2 characters");
+        } else {
+            setLNameError("");
+            setLastName(e.target.value);
+        }
+    }
+
+    const handlePW = (e) => {
+        const regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z]).{8,}$");
+        if (!regex.test(e.target.value) && e.target.value.length>0){
+            setPasswordError("Your password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character")
+        } else {
+            setPasswordError("");
+            setPassword(e.target.value);
+        }
+    }
+    const handleEmail = (e) => {
+        const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        if (!regex.test(e.target.value) && e.target.value.length>0){
+            setEmailError("Please enter a valid email")
+        } else {
+            setEmailError("");
+            setEmail(e.target.value);
+        }
+    }
+
+    const handleConfirmPW = (e) => {
+        if(e.target.value!==password && e.target.value.length>0) {
+            setConfirmPWError("The password confirmation does not match");
+        } else {
+            setConfirmPWError("");
+            setConfirmPassword(e.target.value);
+        } 
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -47,60 +115,122 @@ const SignUp = () => {
                     <Typography component="h1" variant="h5">
                         Sign up
                     </Typography>
-                    <Box component="form" sx={{ mt: 3 }}>
+                    <Box component="form" sx={{ mt: 3 }} onSubmit={register}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
+                                {
+                                    fNameError ?
+                                    <TextField
+                                    error
+                                    required
+                                    fullWidth
+                                    id="outlined-error-helper-text"
+                                    label="First Name"
+                                    onChange={handleFirstName}
+                                    helperText={fNameError}
+                                /> :
                                 <TextField
                                     autoComplete="given-name"
-                                    name="firstName"
+                                    onChange={handleFirstName}
                                     required
                                     fullWidth
                                     id="firstName"
                                     label="First Name"
                                     autoFocus
                                 />
+                                }
                             </Grid>
                             <Grid item xs={12} sm={6}>
+                                {
+                                    lNameError ?
+                                <TextField
+                                    error
+                                    required
+                                    fullWidth
+                                    id="outlined-error-helper-text"
+                                    label="Last Name"
+                                    onChange={handleLastName}
+                                    helperText={lNameError}
+                                /> :
                                 <TextField
                                     required
                                     fullWidth
                                     id="lastName"
                                     label="Last Name"
-                                    name="lastName"
+                                    onChange={handleLastName}
                                     autoComplete="family-name"
                                 />
+                                }
                             </Grid>
                             <Grid item xs={12}>
+                                {
+                                    emailError ? 
+                                <TextField
+                                    error
+                                    required
+                                    fullWidth
+                                    id="outlined-error-helper-text"
+                                    label="Email Address"
+                                    onChange={handleEmail}
+                                    helperText={emailError}
+                                /> :
                                 <TextField
                                     required
                                     fullWidth
                                     id="email"
                                     label="Email Address"
-                                    name="email"
+                                    onChange={handleEmail}
                                     autoComplete="email"
                                 />
+                                }
                             </Grid>
                             <Grid item xs={12}>
-                                <TextField
+                                {
+                                    passwordError ?
+                                    <TextField
+                                    error
                                     required
                                     fullWidth
-                                    name="password"
+                                    id="outlined-error-helper-text"
                                     label="Password"
                                     type="password"
-                                    id="password"
-                                    autoComplete="new-password"
-                                />
+                                    onChange={handlePW}
+                                    helperText={passwordError}
+                                    /> :
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        onChange={handlePW}
+                                        label="Password"
+                                        type="password"
+                                        id="password"
+                                        autoComplete="new-password"
+                                    />
+                                }
                             </Grid>
                             <Grid item xs={12}>
-                                <TextField
+                                {
+                                    confirmPWError ? 
+                                    <TextField
+                                    error
                                     required
                                     fullWidth
-                                    name="confirmPassword"
+                                    id="outlined-error-helper-text"
                                     label="Confirm Password"
                                     type="password"
-                                    id="confirmPassword"
-                                    autoComplete="new-password"
-                                />
+                                    onChange={handleConfirmPW}
+                                    helperText={confirmPWError}
+                                    /> :
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        onChange={handleConfirmPW}
+                                        label="Confirm Password"
+                                        type="password"
+                                        id="confirmPassword"
+                                        autoComplete="new-password"
+                                    />
+                                }
                             </Grid>
                         </Grid>
                         <Button
