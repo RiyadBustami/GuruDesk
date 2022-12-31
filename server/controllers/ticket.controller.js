@@ -1,12 +1,7 @@
 const {Ticket} = require('../models/ticket.model');
 
 module.exports.createTicket = (request,response) => {
-    const {subject, description, requester} = request.body;
-    Ticket.create({
-        subject,
-        description,
-        requester
-    })
+    Ticket.create(request.body)
     .then(ticket => response.json(ticket))
     .catch(err => response.status(400).json(err));
 }

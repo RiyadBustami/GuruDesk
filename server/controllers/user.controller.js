@@ -38,7 +38,9 @@ module.exports.register = (request, response) => {
         .then(user => {
 
             const userToken = jwt.sign({
-                id: user._id
+                id: user._id,
+                isAdmin: user.isAdmin,
+                isAgent: user.isAgent,
             }, process.env.SECRET_KEY);
 
             response
@@ -64,7 +66,9 @@ module.exports.login = async (request, response) => {
     }
 
     const userToken = jwt.sign({
-        id: user._id
+        id: user._id,
+        isAdmin: user.isAdmin,
+        isAgent: user.isAgent,
     }, process.env.SECRET_KEY);
 
     response
