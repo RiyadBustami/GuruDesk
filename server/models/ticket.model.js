@@ -19,7 +19,7 @@ const TicketSchema = new mongoose.Schema({
     priority:{
         type:String,
         enum: ['Low', 'Normal', 'High'],
-        default:['Normal'],
+        default:'Normal',
     },
     requester: {
         type: mongoose.Types.ObjectId, 
