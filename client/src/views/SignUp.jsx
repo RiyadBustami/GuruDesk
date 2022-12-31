@@ -72,9 +72,9 @@ const SignUp = () => {
     }
 
     const handlePW = (e) => {
-        const regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z]).{8,}$");
+        const regex = new RegExp("^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
         if (!regex.test(e.target.value) && e.target.value.length>0){
-            setPasswordError("Your password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character")
+            setPasswordError("Your password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number, 1 special character")
         } else {
             setPasswordError("");
             setPassword(e.target.value);
