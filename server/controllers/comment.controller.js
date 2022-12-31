@@ -1,12 +1,7 @@
 const {Comment} = require('../models/comment.model');
 
 module.exports.createComment = (request,response) => {
-    const {text,ticket,user} = request.body;
-    Comment.create({
-        text,
-        ticket,
-        user
-    })
+    Comment.create(request.body)
     .then(comment => response.json(comment))
     .catch(err => response.status(400).json(err));
 }
