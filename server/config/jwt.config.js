@@ -20,8 +20,6 @@ module.exports.isAdmin = (request, response, next) => {
             response.status(401).json({ verified: false });
         } else {
             if (payload.isAdmin) {
-                console.log(payload);
-                console.log(payload.isAdmin);
                 next();
             } else {
                 response.status(401).json({ verified: false });
@@ -36,8 +34,6 @@ module.exports.isAgent = (request, response, next) => {
             response.status(401).json({ verified: false, msg:"1" });
         } else {
             if (payload.isAgent||payload.isAdmin) {
-                console.log(payload);
-                console.log(payload.isAgent);
                 next();
             } else {
                 response.status(401).json({ verified: false });
@@ -52,11 +48,29 @@ module.exports.hasTicketAccess = (request, response, next) => {
             response.status(401).json({ verified: false, msg:"1" });
         } else {
             const ticket = await Ticket.findById(request.params.id);
-            console.log(ticket.requester);
-            console.log(payload.id)
             if (ticket.requester._id==payload.id||payload.isAgent||payload.isAdmin) {
                 next();
             } else {
+                response.status(401).json({ verified: false });
+            }
+        }
+    });
+}
+
+module.exports.canUpdate = (request, response, next) => {
+    jwt.verify(request.cookies.usertoken, process.env.SECRET_KEY, async(err, payload) => {
+        if (err) {
+            response.status(401).json({ verified: false, msg:"1" });
+        } else {
+            const ticket = await Ticket.findById(request.params.id);
+            if (!ticket.assignee&&(payload.isAgent||payload.isAdmin)&&request.body.assignee==payload.id) {
+                request.body.status="Open";
+                next();
+            }
+            else if((ticket.assignee==payload.id||payload.isAdmin)&&(request.body.status||request.body.priority)){
+                next();
+            }
+            else {
                 response.status(401).json({ verified: false });
             }
         }
