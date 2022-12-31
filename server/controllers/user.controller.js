@@ -34,6 +34,7 @@ module.exports.deleteUser = (request, response) => {
 }
 
 module.exports.register = (request, response) => {
+    request.body.email = request.body.email.toLowerCase();
     User.create(request.body)
         .then(user => {
 
@@ -53,7 +54,7 @@ module.exports.register = (request, response) => {
 }
 
 module.exports.login = async (request, response) => {
-    const user = await User.findOne({ email: request.body.email });
+    const user = await User.findOne({ email: request.body.email.toLowerCase() });
 
     if (user === null) {
         return response.sendStatus(400);
