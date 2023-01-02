@@ -1,17 +1,31 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import TicketForm from './components/TicketForm';
 import SignIn from './views/SignIn';
 import SignUp from './views/SignUp';
-import Test from './views/Test';
+import DashboardLayout from './layouts/dashboard/DashboardLayout';
+import ThemeProvider from './theme';
+import ScrollToTop from './components/scroll-to-top';
+import TicketTable from './components/TicketTable';
 
 function App() {
   return (
-    <Routes>
-      <Route path="/login" element={<SignIn/>}></Route>
-      <Route path="/registration" element={<SignUp/>}></Route>
-      <Route path="/success" element={<Test/>}></Route>
-    </Routes>
+    <ThemeProvider>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/login" element={<SignIn/>}/>
+        <Route path="/registration" element={<SignUp/>}/>
+        <Route path="/ticket/new" element={<TicketForm/>}/>
+        <Route path="/dashboard" element={<DashboardLayout/>}>
+          <Route path="tickets" element={<TicketTable/>}/>
+          <Route path="new" element={<TicketForm/>}/>
+        </Route>
+      </Routes>
+    </ThemeProvider>
   );
 }
 
 export default App;
+
+
+
