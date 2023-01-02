@@ -12,6 +12,7 @@ import {ReactComponent as Logo} from '../images/gurudesklogo.svg';
 import { useState } from 'react';
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
+import { useEffect } from 'react';
 
 function Copyright(props) {
     return (
@@ -32,6 +33,12 @@ export default function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+
+    useEffect(() => {
+        axios.get('http://localhost:8000/api/loggedin', { withCredentials: true })
+            .then(res => navigate("/success"))
+            .catch(err=>{console.log(err)});
+    }, []);
 
     const login = e => {
         e.preventDefault();

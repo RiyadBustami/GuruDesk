@@ -10,7 +10,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {ReactComponent as Logo} from '../images/gurudesklogo.svg';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {useNavigate} from "react-router-dom";
 
 function Copyright(props) {
@@ -40,6 +40,12 @@ const SignUp = () => {
     const [passwordError, setPasswordError] = useState("");
     const [confirmPWError, setConfirmPWError] = useState("");
     const navigate = useNavigate();
+
+    useEffect(() => {
+        axios.get('http://localhost:8000/api/loggedin', { withCredentials: true })
+            .then(res => navigate("/success"))
+            .catch(err => console.log(err));
+    }, []);
 
     const register = e => {
         e.preventDefault();
