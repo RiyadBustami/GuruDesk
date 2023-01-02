@@ -11,6 +11,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {ReactComponent as Logo} from '../images/gurudesklogo.svg';
 import { useState } from 'react';
 import axios from 'axios';
+import {useNavigate} from "react-router-dom";
 
 function Copyright(props) {
     return (
@@ -30,14 +31,15 @@ const theme = createTheme();
 export default function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const login = e => {
         e.preventDefault();
         axios.post('http://localhost:8000/api/login',{
             email,
             password
-        })
-        .then(res=>console.log(res.data.msg))
+        }, { withCredentials: true })
+        .then(res=>navigate("/success"))
         .catch(err=>console.log(err))
     }
 

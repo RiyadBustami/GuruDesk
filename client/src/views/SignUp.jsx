@@ -11,6 +11,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {ReactComponent as Logo} from '../images/gurudesklogo.svg';
 import axios from 'axios';
 import { useState } from 'react';
+import {useNavigate} from "react-router-dom";
 
 function Copyright(props) {
     return (
@@ -33,12 +34,12 @@ const SignUp = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [errors, setErrors] = useState([]);
     const [fNameError, setFNameError] = useState("");
     const [lNameError, setLNameError] = useState("");
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [confirmPWError, setConfirmPWError] = useState("");
+    const navigate = useNavigate();
 
     const register = e => {
         e.preventDefault();
@@ -48,8 +49,8 @@ const SignUp = () => {
             email,
             password,
             confirmPassword
-        })
-        .then(res=>console.log(res.data))
+        }, { withCredentials: true })
+        .then(res=>navigate("/success"))
         .catch(err=>console.log(err))
     }
 
