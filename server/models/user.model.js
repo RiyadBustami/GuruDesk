@@ -16,7 +16,8 @@ const UserSchema = new mongoose.Schema({
         validate: {
             validator: val => /^([\w-\.]+@([\w-]+\.)+[\w-]+)?$/.test(val),
             message: "Please enter a valid email"
-        }
+        },
+        unique: [true, "Email is already in use"]
     },
     password: {
         type: String,
