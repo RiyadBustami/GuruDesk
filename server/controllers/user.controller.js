@@ -83,3 +83,12 @@ module.exports.logout = (request, response) => {
     response.clearCookie('usertoken');
     response.sendStatus(200);
 }
+
+module.exports.getLoggedInUser = (req, res) => {
+    const decodedJwt = jwt.decode(req.cookies.usertoken, { complete: true });
+    User.findById(decodedJwt.payload.id)
+        .then((user) => {
+            res.json({ user });
+        })
+        .catch((error) => res.status(500).json(error));
+}
