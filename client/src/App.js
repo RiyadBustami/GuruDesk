@@ -15,10 +15,9 @@ function App() {
       <Routes>
         <Route path="/login" element={<SignIn/>}/>
         <Route path="/registration" element={<SignUp/>}/>
-        <Route path="/ticket/new" element={<TicketForm/>}/>
         <Route path="/dashboard" element={<DashboardLayout/>}>
           <Route path="tickets" element={<TicketTable/>}/>
-          <Route path="new" element={<TicketForm/>}/>
+          <Route path="tickets/new" element={<TicketForm/>}/>
         </Route>
       </Routes>
     </ThemeProvider>
