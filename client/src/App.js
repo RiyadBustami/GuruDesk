@@ -10,19 +10,25 @@ import TicketTable from './components/TicketTable';
 import TicketView from './components/TicketView';
 
 import AssignAgent from './components/AssignAgent';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function App() {
+  const [user, setUser] = useState();
+  const [myTickets, setMyTickets] = useState([]);
+  const [loaded, setLoaded] = useState(false);
+
   return (
     <ThemeProvider>
       <ScrollToTop />
       <Routes>
         <Route path="/login" element={<SignIn/>}/>
         <Route path="/registration" element={<SignUp/>}/>
-        <Route path="/dashboard" element={<DashboardLayout/>}>
-          <Route path='' element={<Navigate to="/dashboard/tickets"/>} />
-          <Route path="tickets" element={<TicketTable/>}/>
-          <Route path="tickets/new" element={<TicketForm/>}/>
-          <Route path="ticket/:id" element={<TicketView />}/>
+        <Route path="/dashboard" element={<DashboardLayout tickets={myTickets}/>}>
+          <Route path="" element={<TicketTable/>}/>
+          <Route path="tickets/:status" element={<TicketTable/>}/>
+          <Route path="tickets/create" element={<TicketForm/>}/>
+          <Route path="ticket/:id" element={<TicketView/>}/>
           <Route path="admin/users/upgrade" element={<AssignAgent />}/>
         </Route>
       </Routes>

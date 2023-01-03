@@ -7,18 +7,33 @@ const icon = (name) => <SvgColor src={`/assets/icons/navbar/support-ticket.png`}
 
 const navConfig = [
   {
-    title: 'My tickets',
-    path: '/dashboard',
+    title: 'Dashboard',
+    path: '/dashboard/',
     icon: icon('ic_analytics'),
   },
   {
     title: 'Open tickets',
-    path: '/dashboard/user',
+    path: '/dashboard/tickets/Open',
     icon: icon('ic_user'),
   },
   {
     title: 'Closed tickets',
-    path: '/dashboard/products',
+    path: '/dashboard/tickets/Closed',
+    icon: icon('ic_cart'),
+  },
+  {
+    title: 'New tickets',
+    path: '/dashboard/tickets/New',
+    icon: icon('ic_cart'),
+  },
+  {
+    title: 'Pending tickets',
+    path: '/dashboard/tickets/Pending',
+    icon: icon('ic_cart'),
+  },
+  {
+    title: 'Solved tickets',
+    path: '/dashboard/tickets/Solved',
     icon: icon('ic_cart'),
   },
   // {
