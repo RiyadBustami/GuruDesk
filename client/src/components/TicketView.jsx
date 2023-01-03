@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button'
 import InputLabel from '@mui/material/InputLabel';
@@ -7,34 +7,48 @@ import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Autocomplete from '@mui/material/Autocomplete';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const TicketView = () => {
     const bottomRef = useRef(null);
+    const [ticket, setTicket] = useState({});
+    const [loaded, setLoaded] = useState(false);
+    const {id} = useParams();
 
     useEffect(() => {
         bottomRef.current?.scrollIntoView({behavior: 'smooth'});
     });
+    useEffect(()=>{
+        axios.get("http://localhost:8000/api/tickets/"+id, {withCredentials:true})
+            .then(res => {
+                setTicket(res.data);
+                setLoaded(true);
+            })
+            .catch(err=>console.log(err))
+    },[])
 
     const agents = ['reina','saeed','riyad','ameer'];
 
     return (
-        <div style={{display:'flex', justifyContent:'space-between', backgroundColor:'white', padding:'15px', minWidth:'100%'}}>
+        loaded&&<div style={{display:'flex', justifyContent:'space-between', backgroundColor:'white', padding:'15px', minWidth:'100%'}}>
             {/* main section with ticket description and comments */}
             <div>
                 {/* ticket description */}
                 <div className="card mx-2">
                     <div className="card-header" style={{backgroundColor:'#1778f2', color:'white'}}>
-                        <h6>Ticket Requester Name</h6>
-                        <h6 style={{fontSize:'0.85rem'}}>Ticket created at date</h6>
+                        <h6>{ticket.requester.firstName+" "+ticket.requester.lastName}</h6>
+                        <h6 style={{fontSize:'0.85rem'}}>{new Intl.DateTimeFormat('en-GB', { dateStyle: 'full', timeStyle: 'medium', timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone  }).format(new Date(ticket.createdAt))}</h6>
                     </div>
                     <div className="card-body" style={{backgroundColor:'white'}}>
-                        <h5 className="card-title">Ticket Subject</h5>
-                        <p className="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem id unde qui, natus quisquam architecto aliquam esse asperiores consectetur numquam corrupti voluptates, deleniti animi facilis? Non vero libero magnam nihil!</p>
+                        <h5 className="card-title">{ticket.subject}</h5>
+                        <p className="card-text">{ticket.description}</p>
                     </div>
                 </div>
                 {/* scroll div */}
                 <div className='mx-2 my-4' style={{overflowY:"scroll", height:"300px", position:"relative"}} data-mdb-perfect-scrollbar='true'>
                     {/* comment client */}
+                    
                     <div className="card mx-1 my-3" style={{border:'1px solid #f15412'}} >
                         <div className="card-header" style={{display:'flex', justifyContent:'space-between', borderBottom:'1px solid #f15412'}}>
                             <div>Sender</div>
@@ -74,7 +88,6 @@ const TicketView = () => {
                             <p className="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus nam eos maxime aspernatur dolores veritatis quia sint accusantium possimus mollitia veniam corporis, nemo neque quae vel?</p>
                         </div>
                     </div>
-                    <div ref={bottomRef} />
                 </div>
                 <div className='mx-2' style={{border:'1px lightgray solid', borderRadius:'5px', padding:'15px'}}>
                 <TextField
@@ -95,18 +108,18 @@ const TicketView = () => {
                 <div className="card" style={{width:"18rem"}}>
                     <div className="card-body">
                         <h5 className="card-title mb-3">Ticket Info</h5>
-                        <h6 className="card-subtitle mb-2"><span className='text-muted'>Ticket ID:</span></h6>
-                        <h6 className="card-subtitle mb-2"><span className='text-muted'>Created:</span></h6>
-                        <h6 className="card-subtitle mb-2"><span className='text-muted'>Status:</span></h6>
-                        <h6 className="card-subtitle mb-2"><span className='text-muted'>Priority:</span></h6>
+                        <h6 className="card-subtitle mb-2"><span className='text-muted'>Ticket ID:</span> <span style={{fontSize:"0.8rem"}}>{ticket._id}</span></h6>
+                        <h6 className="card-subtitle mb-2"><span className='text-muted'>Created at:</span> <span style={{fontSize:"0.8rem"}}>{new Intl.DateTimeFormat('en-GB', { dateStyle: 'short', timeStyle: 'medium', timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone  }).format(new Date(ticket.createdAt))}</span></h6>
+                        <h6 className="card-subtitle mb-2"><span className='text-muted'>Status:</span> <span style={{fontSize:"0.8rem"}}>{ticket.status}</span></h6>
+                        <h6 className="card-subtitle mb-2"><span className='text-muted'>Priority:</span> <span style={{fontSize:"0.8rem"}}>{ticket.priority}</span></h6>
                     </div>
                 </div>
                 <div className="card my-3" style={{width:"18rem"}}>
                     <div className="card-body">
                         <h5 className="card-title mb-3">Requester</h5>
-                        <h6 className="card-subtitle mb-4">requester name</h6>
+                        <h6 className="card-subtitle mb-4">{ticket.requester.firstName+" "+ticket.requester.lastName}</h6>
                         <h5 className="card-title mb-3">Agent</h5>
-                        <h6 className="card-subtitle mb-2">agent name</h6>
+                        <h6 className="card-subtitle mb-2">{ticket.assignee?ticket.assignee.firstName+" "+ticket.assignee.lastName:"Not assigned"}</h6>
                     </div>
                 </div>
                 <form className='mt-4'>

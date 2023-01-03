@@ -7,6 +7,7 @@ import DashboardLayout from './layouts/dashboard/DashboardLayout';
 import ThemeProvider from './theme';
 import ScrollToTop from './components/scroll-to-top';
 import TicketTable from './components/TicketTable';
+import TicketView from './components/TicketView';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path='' element={<Navigate to="/dashboard/tickets"/>} />
           <Route path="tickets" element={<TicketTable/>}/>
           <Route path="tickets/new" element={<TicketForm/>}/>
+          <Route path="ticket/:id" element={<TicketView />}/>
         </Route>
       </Routes>
     </ThemeProvider>
