@@ -44,26 +44,16 @@ export default function AccountPopover({user}) {
       .catch(err=>console.log(err))
   }
 
+  const getInitials = () => {
+    return user.name.split(" ").map((n)=>n[0]).join("");
+  }
+
   return (
     <>
       <IconButton
         onClick={handleOpen}
-        sx={{
-          p: 0,
-          ...(open && {
-            '&:before': {
-              zIndex: 1,
-              content: "''",
-              width: '100%',
-              height: '100%',
-              borderRadius: '50%',
-              position: 'absolute',
-              bgcolor: (theme) => alpha(theme.palette.grey[900], 0.8),
-            },
-          }),
-        }}
       >
-        <Avatar src={account.photoURL} alt="photoURL" />
+      <div style={{borderRadius:"50%", padding:"5px", backgroundColor:"#f15412", color:"white"}}>{getInitials()}</div>
       </IconButton>
 
       <Popover

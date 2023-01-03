@@ -4,9 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { NavLink as RouterLink } from 'react-router-dom';
 // @mui
 import { styled, alpha } from '@mui/material/styles';
-import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
-// mock
-import account from '../../../_mock/account';
+import { Box, Link, Button, Drawer, Typography } from '@mui/material';
 // hooks
 import useResponsive from '../../../hooks/useResponsive';
 // components
@@ -40,6 +38,10 @@ export default function Nav({user ,openNav, onCloseNav }) {
 
   const isDesktop = useResponsive('up', 'lg');
 
+  const getInitials = () => {
+    return user.name.split(" ").map((n)=>n[0]).join("");
+  }
+
   useEffect(() => {
     if (openNav) {
       onCloseNav();
@@ -61,13 +63,11 @@ export default function Nav({user ,openNav, onCloseNav }) {
       <Box sx={{ mb: 5, mx: 2.5 }}>
         <Link underline="none">
           <StyledAccount>
-            <Avatar src={account.photoURL} alt="photoURL" />
-
+            <div style={{borderRadius:"50%", padding:"7px", width:"35px", height:"35px", backgroundColor:"#f15412", color:"white"}}>{getInitials()}</div>
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
                 {user.name}
               </Typography>
-
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 {user.isAdmin?"Admin":user.isAgent?"Agent":""}
               </Typography>
@@ -87,29 +87,6 @@ export default function Nav({user ,openNav, onCloseNav }) {
 
       <Box sx={{ flexGrow: 1 }} />
 
-      {/* <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
-        <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
-          <Box
-            component="img"
-            src="/assets/illustrations/illustration_avatar.png"
-            sx={{ width: 100, position: 'absolute', top: -50 }}
-          />
-
-          <Box sx={{ textAlign: 'center' }}>
-            <Typography gutterBottom variant="h6">
-              Get more?
-            </Typography>
-
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              From only $69
-            </Typography>
-          </Box>
-
-          <Button href="https://material-ui.com/store/items/minimal-dashboard/" target="_blank" variant="contained">
-            Upgrade to Pro
-          </Button>
-        </Stack>
-      </Box> */}
     </Scrollbar>
   );
 
