@@ -32,6 +32,7 @@ const theme = createTheme();
 export default function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -48,9 +49,8 @@ export default function SignIn() {
         }, { withCredentials: true })
             .then(res => {
                 navigate("/dashboard");
-
             })
-            .catch(err => console.log(err))
+            .catch(err => {console.log(err); setError("Please check your email address and password then try again.")})
     }
 
     return (
@@ -93,6 +93,12 @@ export default function SignIn() {
                             id="password"
                             autoComplete="current-password"
                         />
+                        {
+                            error?
+                            <p style={{color:"#f15412", fontSize:"0.85rem", margin:"0"}}>{error}</p>
+                            :
+                            <></>
+                        }
                         <Button
                             type="submit"
                             fullWidth

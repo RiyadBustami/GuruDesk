@@ -43,7 +43,7 @@ const SignUp = () => {
 
     useEffect(() => {
         axios.get('http://localhost:8000/api/loggedin', { withCredentials: true })
-            .then(res => navigate("/success"))
+            .then(res => navigate("/dashboard"))
             .catch(err => console.log(err));
     }, []);
 
@@ -56,7 +56,7 @@ const SignUp = () => {
             password,
             confirmPassword
         }, { withCredentials: true })
-        .then(res=>navigate("/success"))
+        .then(res=>navigate("/dashboard"))
         .catch(err=>console.log(err))
     }
 

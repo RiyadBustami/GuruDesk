@@ -11,14 +11,11 @@ import axios from 'axios';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 const TicketTable = () => {
-    const [user, setUser] = useState({});
     const [myTickets, setMyTickets ] = useState([]);
     const [loaded, setLoaded] = useState(false);
     useEffect(() => {
         axios.get('http://localhost:8000/api/loggedin', { withCredentials: true })
             .then(res => {
-                
-                setUser(res.data.user);
                 axios.get('http://localhost:8000/api/tickets/user/' + res.data.user.id, { withCredentials: true })
                     .then(res => {
                         setMyTickets(res.data);
@@ -56,7 +53,7 @@ const TicketTable = () => {
                                 {ticket.requester.firstName+" "+ticket.requester.lastName}
                             </TableCell>
                             <TableCell><Link to={"/dashboard/ticket/"+ticket._id}>{ticket.subject}</Link></TableCell>
-                            <TableCell>{ticket.assignee?ticket.assignee.firstName+" "+ticket.assignee.lastName:"None assigned yet"}</TableCell>
+                            <TableCell>{ticket.assignee?ticket.assignee.firstName+" "+ticket.assignee.lastName:"Not assigned yet"}</TableCell>
                             <TableCell>{ticket.status}</TableCell>
                             <TableCell>{new Intl.DateTimeFormat('en-US',{year:'numeric', month:'long', day:'numeric'}).format(new Date(ticket.createdAt))}</TableCell>
                         </TableRow>)}
