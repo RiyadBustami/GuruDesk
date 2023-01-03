@@ -13,11 +13,11 @@ function App() {
     <ThemeProvider>
       <ScrollToTop />
       <Routes>
-        <Route path="/login" element={<SignIn />} />
-        <Route path="/registration" element={<SignUp />} />
-        <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route path="tickets" element={<TicketTable />} />
-          <Route path="tickets/new" element={<TicketForm />} />
+        <Route path="/login" element={<SignIn/>}/>
+        <Route path="/registration" element={<SignUp/>}/>
+        <Route path="/dashboard" element={<DashboardLayout/>}>
+          <Route path="tickets" element={<TicketTable/>}/>
+          <Route path="tickets/new" element={<TicketForm/>}/>
         </Route>
       </Routes>
     </ThemeProvider>
