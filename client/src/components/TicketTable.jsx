@@ -17,6 +17,7 @@ const TicketTable = () => {
     useEffect(() => {
         axios.get('http://localhost:8000/api/loggedin', { withCredentials: true })
             .then(res => {
+                
                 setUser(res.data.user);
                 axios.get('http://localhost:8000/api/tickets/user/' + res.data.user.id, { withCredentials: true })
                     .then(res => {
@@ -28,6 +29,11 @@ const TicketTable = () => {
             .catch(err => { console.log(err) });
 
     }, []);
+
+    const getInitials = (name) => {
+        return name.split(" ").map((n)=>n[0]).join("");
+    }
+
     return (
         <div className='mx-4'>
             <TableContainer component={Paper}>
@@ -45,7 +51,10 @@ const TicketTable = () => {
                         {loaded&&myTickets.map((ticket,i)=><TableRow
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             className={rowstyle.row} key={i}>
-                            <TableCell component="th" scope="row">{ticket.requester.firstName+" "+ticket.requester.lastName}</TableCell>
+                            <TableCell component="th" scope="row" sx={{display:'flex', alignItems:'center'}}>
+                                <div style={{borderRadius:"50%", padding:"7px", width:"35px", height:"35px", backgroundColor:"#1778f2", color:"white", marginRight:"10px"}}>{getInitials(ticket.requester.firstName+" "+ticket.requester.lastName)}</div>
+                                {ticket.requester.firstName+" "+ticket.requester.lastName}
+                            </TableCell>
                             <TableCell><Link to={"/dashboard/ticket/"+ticket._id}>{ticket.subject}</Link></TableCell>
                             <TableCell>{ticket.assignee?ticket.assignee.firstName+" "+ticket.assignee.lastName:"None assigned yet"}</TableCell>
                             <TableCell>{ticket.status}</TableCell>
