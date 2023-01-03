@@ -45,9 +45,9 @@ const TicketTable = () => {
                         {loaded&&myTickets.map((ticket,i)=><TableRow
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             className={rowstyle.row} key={i}>
-                            <TableCell component="th" scope="row">{user.name}</TableCell>
+                            <TableCell component="th" scope="row">{ticket.requester.firstName+" "+ticket.requester.lastName}</TableCell>
                             <TableCell><Link to={"/dashboard/ticket/"+ticket._id}>{ticket.subject}</Link></TableCell>
-                            <TableCell>{ticket.assignee?ticket.assignee:"None"}</TableCell>
+                            <TableCell>{ticket.assignee?ticket.assignee.firstName+" "+ticket.assignee.lastName:"None assigned yet"}</TableCell>
                             <TableCell>{ticket.status}</TableCell>
                             <TableCell>{new Intl.DateTimeFormat('en-US',{year:'numeric', month:'long', day:'numeric'}).format(new Date(ticket.createdAt))}</TableCell>
                         </TableRow>)}
