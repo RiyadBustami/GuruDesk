@@ -14,6 +14,9 @@ const TicketView = () => {
     const bottomRef = useRef(null);
     const [ticket, setTicket] = useState({});
     const [loaded, setLoaded] = useState(false);
+    const [user, setUser ] = useState({});
+    const [canAssign, setCanAssign] = useState(false);
+    const [hasAuth, setHasAuth] = useState(false);
     const {id} = useParams();
 
     useEffect(() => {
@@ -26,9 +29,15 @@ const TicketView = () => {
                 setLoaded(true);
             })
             .catch(err=>console.log(err))
-    },[])
-
-    const agents = ['reina','saeed','riyad','ameer'];
+        axios.get('http://localhost:8000/api/loggedin', { withCredentials: true })
+            .then(res => {
+                setUser(res.data.user);
+                user.isAdmin&&setHasAuth(true);
+                user.isAgent&&setHasAuth(true);
+            })
+            .catch(err => { console.log(err) });
+        ticket.assignee?setCanAssign(false):setCanAssign(true)
+    },[loaded]);
 
     return (
         loaded&&<div style={{display:'flex', justifyContent:'space-between', backgroundColor:'white', padding:'15px', minWidth:'100%'}}>
@@ -122,6 +131,8 @@ const TicketView = () => {
                         <h6 className="card-subtitle mb-2">{ticket.assignee?ticket.assignee.firstName+" "+ticket.assignee.lastName:"Not assigned"}</h6>
                     </div>
                 </div>
+                {
+                    hasAuth&&<>
                 <form className='mt-4'>
                     <FormControl variant="standard" fullWidth>
                         <InputLabel id="demo-simple-select-standard-label">Change Ticket Status</InputLabel>
@@ -163,9 +174,10 @@ const TicketView = () => {
                         <Button variant="contained" type="submit">Submit</Button>
                     </div>
                 </form>
-                <div className='text-end mt-5'>
-                    <Button variant="contained" size="large" sx={{backgroundColor:'#F15412'}} type="submit">Assignee me as Agent</Button>
-                </div>
+                {canAssign&&<div className='text-end mt-5'>
+                    <Button variant="contained" size="large" sx={{backgroundColor:'#F15412'}} type="submit">Assign me as Agent</Button>
+                </div>}
+                </>}
             </div>
         </div>
     )
