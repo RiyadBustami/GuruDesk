@@ -9,6 +9,8 @@ import ScrollToTop from './components/scroll-to-top';
 import TicketTable from './components/TicketTable';
 import TicketView from './components/TicketView';
 
+import AssignAgent from './components/AssignAgent';
+
 function App() {
   return (
     <ThemeProvider>
@@ -21,6 +23,7 @@ function App() {
           <Route path="tickets" element={<TicketTable/>}/>
           <Route path="tickets/new" element={<TicketForm/>}/>
           <Route path="ticket/:id" element={<TicketView />}/>
+          <Route path="admin/users/upgrade" element={<AssignAgent />}/>
         </Route>
       </Routes>
     </ThemeProvider>
