@@ -12,7 +12,7 @@ module.exports.getAllTickets = (request, response) => {
         .catch(err => response.json(err))
 }
 module.exports.getMyTickets = (request, response) => {
-    Ticket.find({ requester: request.body.requester })
+    Ticket.find({ requester: request.params.user })
         .then(tickets => response.json(tickets))
         .catch(err => response.json(err))
 }
