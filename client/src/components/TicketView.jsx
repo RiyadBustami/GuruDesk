@@ -124,6 +124,19 @@ const TicketView = () => {
                         <MenuItem value="Closed">Closed</MenuItem>
                         </Select>
                     </FormControl>
+                    <FormControl variant="standard" fullWidth sx={{mt:3}}>
+                        <InputLabel id="demo-simple-select-standard-label">Change Ticket Priority</InputLabel>
+                        <Select
+                        labelId="demo-simple-select-standard-label"
+                        id="demo-simple-select-standard"
+                        label="Age"
+                        // onChange={handleChange}
+                        >
+                        <MenuItem value="Low">Low</MenuItem>
+                        <MenuItem value="Normal">Normal</MenuItem>
+                        <MenuItem value="High">High</MenuItem>
+                        </Select>
+                    </FormControl>
                     {/* <div className='mt-4'>
                         <Autocomplete
                             disablePortal
@@ -133,7 +146,7 @@ const TicketView = () => {
                             renderInput={(params) => <TextField {...params} label="Assign an Agent" variant="standard"/>}
                             />
                     </div> */}
-                    <div className='text-end mt-3'>
+                    <div className='text-end mt-4'>
                         <Button variant="contained" type="submit">Submit</Button>
                     </div>
                 </form>
