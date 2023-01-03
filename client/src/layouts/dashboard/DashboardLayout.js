@@ -5,6 +5,8 @@ import { styled } from '@mui/material/styles';
 //
 import Header from './header';
 import Nav from './nav';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 // ----------------------------------------------------------------------
 
@@ -34,12 +36,21 @@ const Main = styled('div')(({ theme }) => ({
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
-
+  const [user, setUser] = useState();
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    axios.get('http://localhost:8000/api/loggedin', { withCredentials: true })
+      .then(res => {
+        setUser(res.data.user);
+        setLoaded(true);
+      })
+      .catch(err => { console.log(err) });
+  }, []);
   return (
     <StyledRoot>
-      <Header onOpenNav={() => setOpen(true)} />
+      {loaded&&<Header user={user} onOpenNav={() => setOpen(true)} />}
 
-      <Nav openNav={open} onCloseNav={() => setOpen(false)} />
+      {loaded && <Nav user={user} openNav={open} onCloseNav={() => setOpen(false)} />}
 
       <Main>
         <Outlet />

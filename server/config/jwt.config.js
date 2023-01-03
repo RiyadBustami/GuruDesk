@@ -9,6 +9,7 @@ module.exports.authenticate = (request, response, next) => {
         if (err) {
             response.status(401).json({ verified: false });
         } else {
+            if(request.body.description){request.body.requester = payload.id;}
             next();
         }
     });

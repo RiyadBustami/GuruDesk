@@ -36,7 +36,7 @@ export default function SignIn() {
 
     useEffect(() => {
         axios.get('http://localhost:8000/api/loggedin', { withCredentials: true })
-            .then(res => navigate("/success"))
+            .then(res => navigate("/dashboard"))
             .catch(err=>{console.log(err)});
     }, []);
 
@@ -46,7 +46,7 @@ export default function SignIn() {
             email,
             password
         }, { withCredentials: true })
-        .then(res=>navigate("/success"))
+        .then(res=>navigate("/dashboard"))
         .catch(err=>console.log(err))
     }
 

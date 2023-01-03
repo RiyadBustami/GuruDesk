@@ -48,7 +48,7 @@ module.exports.register = (request, response) => {
                 .cookie("usertoken", userToken, process.env.SECRET_KEY, {
                     httpOnly: true
                 })
-                .json({ msg: "Registered successfully!", user: user });
+                .json({ msg: "Registered successfully!" });
         })
         .catch(err => response.json(err));
 }
@@ -88,7 +88,15 @@ module.exports.getLoggedInUser = (req, res) => {
     const decodedJwt = jwt.decode(req.cookies.usertoken, { complete: true });
     User.findById(decodedJwt.payload.id)
         .then((user) => {
-            res.json({ user });
+            res.json({
+                user: {
+                    id: user.id,
+                    name: user.firstName+' '+user.lastName,
+                    email: user.email,
+                    isAdmin: user.isAdmin,
+                    isAgent: user.isAgent
+                }
+            });
         })
         .catch((error) => res.status(500).json(error));
 }
