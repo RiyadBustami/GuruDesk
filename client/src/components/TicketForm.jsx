@@ -4,20 +4,25 @@ import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const TicketForm = () => {
     const [subject, setSubject] = useState("");
     const [description, setDescription] = useState("");
     const [subjectError, setSubjectError] = useState("");
     const [descriptionError, setDescriptionError] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = e => {
         e.preventDefault();
         axios.post('http://localhost:8000/api/tickets', {
             subject,
             description
+        },{withCredentials:true})
+        .then(res=>{
+            console.log(res);
+            navigate("/dashboard/tickets")
         })
-        .then(res=>console.log(res))
         .catch(err=>console.log(err))
     }
 
