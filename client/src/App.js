@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
 import TicketForm from './components/TicketForm';
 import SignIn from './views/SignIn';
@@ -16,6 +16,7 @@ function App() {
         <Route path="/login" element={<SignIn/>}/>
         <Route path="/registration" element={<SignUp/>}/>
         <Route path="/dashboard" element={<DashboardLayout/>}>
+          <Route path='' element={<Navigate to="/dashboard/tickets"/>} />
           <Route path="tickets" element={<TicketTable/>}/>
           <Route path="tickets/new" element={<TicketForm/>}/>
         </Route>
