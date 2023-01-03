@@ -18,7 +18,7 @@ module.exports.getMyTickets = (request, response) => {
 }
 
 module.exports.getTicket = (request, response) => {
-    Ticket.findOne({ _id: request.params.id })
+    Ticket.findOne({ _id: request.params.id }).populate("requester").populate("assignee")
         .then(ticket => response.json(ticket))
         .catch(err => response.json(err))
 }
