@@ -9,27 +9,19 @@ import Paper from '@mui/material/Paper';
 import rowstyle from './modules/table.module.css';
 import axios from 'axios';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext, useParams } from 'react-router-dom';
 const TicketTable = () => {
-    const [myTickets, setMyTickets ] = useState([]);
-    const [loaded, setLoaded] = useState(false);
-    useEffect(() => {
-        axios.get('http://localhost:8000/api/loggedin', { withCredentials: true })
-            .then(res => {
-                axios.get('http://localhost:8000/api/tickets/user/' + res.data.user.id, { withCredentials: true })
-                    .then(res => {
-                        setMyTickets(res.data);
-                        setLoaded(true);
-                    })
-                    .catch(err => console.log(err))
-            })
-            .catch(err => { console.log(err) });
-
-    }, []);
-
+    const [myTickets] = useOutletContext();
+    const [tickets, setTickets] = useState(myTickets);
+    const {status} = useParams();
     const getInitials = (name) => {
         return name.split(" ").map((n)=>n[0]).join("");
     }
+    useEffect(()=>{
+        status?
+        setTickets(myTickets.filter((ticket)=>{if(ticket.status===status){return ticket}})):
+        setTickets(myTickets)
+    })
 
     return (
         <div className='mx-4'>
@@ -45,7 +37,7 @@ const TicketTable = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {loaded&&myTickets.map((ticket,i)=><TableRow
+                        {tickets.map((ticket,i)=><TableRow
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             className={rowstyle.row} key={i}>
                             <TableCell component="th" scope="row" sx={{display:'flex', alignItems:'center'}}>

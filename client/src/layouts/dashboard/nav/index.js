@@ -76,7 +76,7 @@ export default function Nav({user ,openNav, onCloseNav }) {
         </Link>
       </Box>
       <Box  sx={{ mb: 2, mx: 2.5 }} display="flex" justifyContent="flex-end">
-      <Link  component={RouterLink} to="tickets/new">
+      <Link  component={RouterLink} to="tickets/create">
       <Button variant="contained">+ New Ticket</Button>
       </Link>
       

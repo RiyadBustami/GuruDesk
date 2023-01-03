@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Children, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
@@ -7,6 +7,7 @@ import Header from './header';
 import Nav from './nav';
 import { useEffect } from 'react';
 import axios from 'axios';
+import { set } from 'date-fns';
 
 // ----------------------------------------------------------------------
 
@@ -34,26 +35,43 @@ const Main = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function DashboardLayout() {
+export default function DashboardLayout(props) {
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState();
+  const [myTickets, setMyTickets] = useState([]);
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     axios.get('http://localhost:8000/api/loggedin', { withCredentials: true })
       .then(res => {
         setUser(res.data.user);
+        if (res.data.user.isAdmin||res.data.user.isAgent) {
+          axios.get("http://localhost:8000/api/tickets", {withCredentials:true})
+            .then(res=>{
+              setMyTickets(res.data);
+              setLoaded(true);
+            })
+            .catch(err=>console.log(err))
+        }
+        else{
+        axios.get('http://localhost:8000/api/tickets/user/' + res.data.user.id, { withCredentials: true })
+          .then(res => {
+            setMyTickets(res.data);
+            setLoaded(true);
+          })
+          .catch(err => console.log(err))
+        }
         setLoaded(true);
       })
       .catch(err => { console.log(err) });
+
   }, []);
   return (
     <StyledRoot>
-      {loaded&&<Header user={user} onOpenNav={() => setOpen(true)} />}
+      {loaded && <Header user={user} onOpenNav={() => setOpen(true)} />}
 
       {loaded && <Nav user={user} openNav={open} onCloseNav={() => setOpen(false)} />}
-
       <Main>
-        <Outlet />
+        <Outlet context={[myTickets, setMyTickets]} />
       </Main>
     </StyledRoot>
   );
