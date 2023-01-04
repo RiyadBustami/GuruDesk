@@ -50,7 +50,7 @@ const TicketView = () => {
             axios.put("http://localhost:8000/api/tickets/" + id, { assignee: user.id }, { withCredentials: true })
                 .then(res => {
                     
-                    setTicket({ ...ticket, assignee: user });
+                    setTicket({ ...ticket, assignee: user,status:"Open" });
                     setMyTickets(myTickets.map((element) => {
                         if (element._id === ticket._id) {
                             element.assignee = user;
@@ -239,7 +239,6 @@ const TicketView = () => {
                                         onChange={e => setStatus(e.target.value)}
                                         value={status}
                                     >
-                                        <MenuItem value="New">New</MenuItem>
                                         <MenuItem value="Open">Open</MenuItem>
                                         <MenuItem value="Pending">Pending</MenuItem>
                                         <MenuItem value="Solved">Solved</MenuItem>
