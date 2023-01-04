@@ -18,6 +18,8 @@ const TicketView = () => {
     const { id } = useParams();
     const [myTickets, setMyTickets] = useOutletContext();
     const [comment, setComment] = useState("");
+    const [ticketComments, setTicketComments] = useState([]);
+
 
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -29,7 +31,12 @@ const TicketView = () => {
                 axios.get("http://localhost:8000/api/tickets/" + id, { withCredentials: true })
                     .then(res => {
                         setTicket(res.data);
-                        setLoaded(true);
+                        axios.get("http://localhost:8000/api/comments/ticket/"+id,{withCredentials:true})
+                            .then(res=>{
+                                setTicketComments(res.data);
+                                console.log(res.data);
+                                setLoaded(true);
+                            })
                     })
                     .catch(err => console.log(err))
             })
@@ -57,8 +64,13 @@ const TicketView = () => {
     }
     const sendComment = (e)=>{
         if(comment.length>0){
-            axios.post("http://localhost:8000/api/comments",{ticket:ticket._id, text:comment},{withCredentials:true})
-                .then((res)=>console.log(res))
+            axios.post("http://localhost:8000/api/comments",{user: user, ticket:ticket._id, text:comment},{withCredentials:true})
+                .then((res)=>{
+                    console.log(res);
+                    res.data.user=user;
+                    setTicketComments([...ticketComments, res.data]);
+                    setComment("");
+                })
                 .catch(err=>console.log(err))
         }
     }
@@ -112,8 +124,33 @@ const TicketView = () => {
                 </div>
                 {/* scroll div */}
                 <div className='mx-2 my-4' style={{ overflowY: "scroll", height: "300px", position: "relative" }} data-mdb-perfect-scrollbar='true'>
+                {ticketComments.map((comment, i) => {
+                        if (comment?.user?.isAgent) {
+                            return <div className="card mx-1 my-3" style={{ border: '1px solid #1778f2' }} key={i} >
+                                <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #1778f2' }}>
+                                    <div>{comment?.user?.firstName + " " + comment?.user?.lastName}</div>
+                                    <div style={{ fontSize: '0.9rem' }}>{comment?.createdAt}</div>
+                                </div>
+                                <div className="card-body">
+                                    <p className="card-text">{comment?.text}</p>
+                                </div>
+                            </div>
+                        }
+                        else {
+                            return <div className="card mx-1 my-3" style={{ border: '1px solid #f15412' }} key={i}>
+                                <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f15412' }}>
+                                    <div>{comment?.user?.firstName + " " + comment?.user?.lastName}</div>
+                                    <div style={{ fontSize: '0.9rem' }}>{new Intl.DateTimeFormat('en-GB', { dateStyle: 'short', timeStyle: 'medium', timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }).format(new Date(ticket.createdAt))}</div>
+                                </div>
+                                <div className="card-body">
+                                    <p className="card-text">{comment?.text}</p>
+                                </div>
+                            </div>
+
+                        }
+                    })}
                     {/* comment client */}
-                    <div className="card mx-1 my-3" style={{ border: '1px solid #f15412' }} >
+                    {/* <div className="card mx-1 my-3" style={{ border: '1px solid #f15412' }} >
                         <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f15412' }}>
                             <div>Sender</div>
                             <div style={{ fontSize: '0.9rem' }}>date</div>
@@ -121,9 +158,9 @@ const TicketView = () => {
                         <div className="card-body">
                             <p className="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus nam eos maxime aspernatur dolores veritatis quia sint accusantium possimus mollitia veniam corporis, nemo neque quae vel?</p>
                         </div>
-                    </div>
+                    </div> */}
                     {/* comment agent */}
-                    <div className="card mx-1 my-3" style={{ border: '1px solid #1778f2' }} >
+                    {/* <div className="card mx-1 my-3" style={{ border: '1px solid #1778f2' }} >
                         <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #1778f2' }}>
                             <div>Sender</div>
                             <div style={{ fontSize: '0.9rem' }}>date</div>
@@ -131,9 +168,9 @@ const TicketView = () => {
                         <div className="card-body">
                             <p className="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus nam eos maxime aspernatur dolores veritatis quia sint accusantium possimus mollitia veniam corporis, nemo neque quae vel?</p>
                         </div>
-                    </div>
+                    </div> */}
                     {/* comment client */}
-                    <div className="card mx-1 my-3" style={{ border: '1px solid #f15412' }} >
+                    {/* <div className="card mx-1 my-3" style={{ border: '1px solid #f15412' }} >
                         <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f15412' }}>
                             <div>Sender</div>
                             <div style={{ fontSize: '0.9rem' }}>date</div>
@@ -141,9 +178,9 @@ const TicketView = () => {
                         <div className="card-body">
                             <p className="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus nam eos maxime aspernatur dolores veritatis quia sint accusantium possimus mollitia veniam corporis, nemo neque quae vel?</p>
                         </div>
-                    </div>
+                    </div> */}
                     {/* comment agent */}
-                    <div className="card mx-1 my-3" style={{ border: '1px solid #1778f2' }} >
+                    {/* <div className="card mx-1 my-3" style={{ border: '1px solid #1778f2' }} >
                         <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #1778f2' }}>
                             <div>Sender</div>
                             <div style={{ fontSize: '0.9rem' }}>date</div>
@@ -151,7 +188,7 @@ const TicketView = () => {
                         <div className="card-body">
                             <p className="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus nam eos maxime aspernatur dolores veritatis quia sint accusantium possimus mollitia veniam corporis, nemo neque quae vel?</p>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 <div className='mx-2' style={{ border: '1px lightgray solid', borderRadius: '5px', padding: '15px' }}>
                     <TextField
