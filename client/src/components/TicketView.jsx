@@ -24,8 +24,6 @@ const TicketView = () => {
     const [refresh, setRefresh] = useState(0);
 
     useEffect(() => {
-        // socket.emit('comment',"hello from tizi",id);
-        // socket.on('comment', data=>console.log(data))
         socket.on(id, data => setRefresh(refresh+1));
         console.log(ticketComments);
         return () => socket.disconnect(true);
@@ -159,45 +157,6 @@ const TicketView = () => {
                         }
                     })}
                     {/* comment client */}
-                    {/* <div className="card mx-1 my-3" style={{ border: '1px solid #f15412' }} >
-                        <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f15412' }}>
-                            <div>Sender</div>
-                            <div style={{ fontSize: '0.9rem' }}>date</div>
-                        </div>
-                        <div className="card-body">
-                            <p className="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus nam eos maxime aspernatur dolores veritatis quia sint accusantium possimus mollitia veniam corporis, nemo neque quae vel?</p>
-                        </div>
-                    </div> */}
-                    {/* comment agent */}
-                    {/* <div className="card mx-1 my-3" style={{ border: '1px solid #1778f2' }} >
-                        <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #1778f2' }}>
-                            <div>Sender</div>
-                            <div style={{ fontSize: '0.9rem' }}>date</div>
-                        </div>
-                        <div className="card-body">
-                            <p className="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus nam eos maxime aspernatur dolores veritatis quia sint accusantium possimus mollitia veniam corporis, nemo neque quae vel?</p>
-                        </div>
-                    </div> */}
-                    {/* comment client */}
-                    {/* <div className="card mx-1 my-3" style={{ border: '1px solid #f15412' }} >
-                        <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f15412' }}>
-                            <div>Sender</div>
-                            <div style={{ fontSize: '0.9rem' }}>date</div>
-                        </div>
-                        <div className="card-body">
-                            <p className="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus nam eos maxime aspernatur dolores veritatis quia sint accusantium possimus mollitia veniam corporis, nemo neque quae vel?</p>
-                        </div>
-                    </div> */}
-                    {/* comment agent */}
-                    {/* <div className="card mx-1 my-3" style={{ border: '1px solid #1778f2' }} >
-                        <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #1778f2' }}>
-                            <div>Sender</div>
-                            <div style={{ fontSize: '0.9rem' }}>date</div>
-                        </div>
-                        <div className="card-body">
-                            <p className="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus nam eos maxime aspernatur dolores veritatis quia sint accusantium possimus mollitia veniam corporis, nemo neque quae vel?</p>
-                        </div>
-                    </div> */}
                 </div>
                 {(ticket?.status !== "Closed" && (ticket?.assignee?._id === user?._id || ticket?.requester?._id === user?._id)) && <div className='mx-2' style={{ border: '1px lightgray solid', borderRadius: '5px', padding: '15px' }}>
                     <TextField
@@ -255,7 +214,7 @@ const TicketView = () => {
                                     </Select>
                                 </FormControl>
                                 <div className='text-end mt-4'>
-                                    <Button variant="contained" type="submit">Submit</Button>
+                                    <Button variant="outlined" type="submit">Change</Button>
                                 </div>
                             </form>
                                 <form className='mt-4' onSubmit={handlePriortySubmit}>
@@ -274,7 +233,7 @@ const TicketView = () => {
                                         </Select>
                                     </FormControl>
                                     <div className='text-end mt-4'>
-                                        <Button variant="contained" type="submit">Submit</Button>
+                                        <Button variant="outlined" type="submit">Change</Button>
                                     </div>
                                 </form></>
                         }
