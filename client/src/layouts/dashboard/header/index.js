@@ -57,7 +57,6 @@ export default function Header({ user, onOpenNav }) {
           <Iconify icon="eva:menu-2-fill" />
         </IconButton>
 
-        <Searchbar />
         <Box sx={{ flexGrow: 1 }} />
 
         <Stack
@@ -68,8 +67,7 @@ export default function Header({ user, onOpenNav }) {
             sm: 1,
           }}
         >
-          <NotificationsPopover />
-          <AccountPopover user={user}/>
+        <AccountPopover user={user}/>
         </Stack>
       </StyledToolbar>
     </StyledRoot>
