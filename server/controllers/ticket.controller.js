@@ -7,12 +7,12 @@ module.exports.createTicket = (request, response) => {
 }
 
 module.exports.getAllTickets = (request, response) => {
-    Ticket.find({}).populate("requester").populate("assignee")
+    Ticket.find({}).sort({createdAt:-1}).populate("requester").populate("assignee")
         .then(tickets => response.json(tickets))
         .catch(err => response.json(err))
 }
 module.exports.getMyTickets = (request, response) => {
-    Ticket.find({ requester: request.params.user }).populate("requester").populate("assignee")
+    Ticket.find({ requester: request.params.user }).sort({createdAt:-1}).populate("requester").populate("assignee")
         .then(tickets => response.json(tickets))
         .catch(err => response.json(err))
 }
