@@ -91,6 +91,8 @@ module.exports.getLoggedInUser = (req, res) => {
             res.json({
                 user: {
                     id: user.id,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
                     name: user.firstName+' '+user.lastName,
                     email: user.email,
                     isAdmin: user.isAdmin,
