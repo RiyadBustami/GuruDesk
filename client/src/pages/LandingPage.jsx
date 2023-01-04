@@ -1,18 +1,18 @@
 import React from 'react'
 import AppAppBar from '../views/AppAppBar'
 import AppFooter from '../views/AppFooter'
-import ProductHero from '../views/ProductHero'
-import ProductHowItWorks from '../views/ProductHowItWork'
-import ProductValues from '../views/ProductValues'
+import AboutUs from '../views/AboutUs'
 import withRoot from '../withRoot'
+import Header from '../views/Header'
+import HowItWorks from '../views/HowItWork'
 
 const LandingPage = () => {
     return (
         <React.Fragment>
             <AppAppBar/>
-            <ProductHero/>
-            <ProductHowItWorks/>
-            <ProductValues/>
+            <Header/>
+            <HowItWorks/>
+            <AboutUs/>
             <AppFooter/>
         </React.Fragment>
     )
