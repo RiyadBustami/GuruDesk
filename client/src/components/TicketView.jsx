@@ -17,6 +17,7 @@ const TicketView = () => {
     const [user, setUser] = useState({});
     const { id } = useParams();
     const [myTickets, setMyTickets] = useOutletContext();
+    const [comment, setComment] = useState("");
 
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -52,6 +53,13 @@ const TicketView = () => {
                     }))
                 })
                 .catch(err => console.log(err))
+        }
+    }
+    const sendComment = (e)=>{
+        if(comment.length>0){
+            axios.post("http://localhost:8000/api/comments",{ticket:ticket._id, text:comment},{withCredentials:true})
+                .then((res)=>console.log(res))
+                .catch(err=>console.log(err))
         }
     }
 
@@ -153,9 +161,11 @@ const TicketView = () => {
                         rows={4}
                         variant="standard"
                         fullWidth
+                        onChange={e=>setComment(e.target.value)}
+                        value={comment}
                     />
                     <div className='text-end mt-3'>
-                        <Button variant="contained" type="submit">Send</Button>
+                        <Button variant="contained" type="submit" onClick={sendComment}>Send</Button>
                     </div>
                 </div>
             </div>
