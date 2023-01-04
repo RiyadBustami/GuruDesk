@@ -16,6 +16,11 @@ module.exports.getMyTickets = (request, response) => {
         .then(tickets => response.json(tickets))
         .catch(err => response.json(err))
 }
+module.exports.getِAgentTickets = (request, response) => {
+    Ticket.find({ assignee: request.params.user }).sort({createdAt:-1}).populate("requester").populate("assignee")
+        .then(tickets => response.json(tickets))
+        .catch(err => response.json(err))
+}
 
 module.exports.getTicket = (request, response) => {
     Ticket.findOne({ _id: request.params.id }).populate("requester").populate("assignee")
