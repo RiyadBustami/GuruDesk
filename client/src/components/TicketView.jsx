@@ -32,6 +32,15 @@ const TicketView = () => {
             .catch(err => { console.log(err) });
     }, []);
 
+    const assignMe = (e) => {
+        e.preventDefault();
+        axios.put("http://localhost:8000/api/tickets/"+id,{assignee:user.id},{withCredentials:true})
+            .then(res=>{
+                setTicket({...ticket, assignee:user});
+            })
+            .catch(err=>console.log(err))
+    }
+
     return (
         loaded && <div style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: 'white', padding: '15px', minWidth: '100%' }}>
             {/* main section with ticket description and comments */}
@@ -164,7 +173,7 @@ const TicketView = () => {
                         {
                             !ticket?.assignee &&
                             <div className='text-end mt-5'>
-                                <Button variant="contained" size="large" sx={{ backgroundColor: '#F15412' }} type="submit">Assign me as Agent</Button>
+                                <Button variant="contained" size="large" sx={{ backgroundColor: '#F15412' }} type="submit" onClick={assignMe}>Assign me as Agent</Button>
                             </div>
                         }
                     </>}
