@@ -129,7 +129,7 @@ const TicketView = () => {
                             return <div className="card mx-1 my-3" style={{ border: '1px solid #1778f2' }} key={i} >
                                 <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #1778f2' }}>
                                     <div>{comment?.user?.firstName + " " + comment?.user?.lastName}</div>
-                                    <div style={{ fontSize: '0.9rem' }}>{comment?.createdAt}</div>
+                                    <div style={{ fontSize: '0.9rem' }}>{new Intl.DateTimeFormat('en-GB', { dateStyle: 'short', timeStyle: 'medium', timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }).format(new Date(ticket.createdAt))}</div>
                                 </div>
                                 <div className="card-body">
                                     <p className="card-text">{comment?.text}</p>
