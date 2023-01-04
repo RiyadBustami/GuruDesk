@@ -3,11 +3,10 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import Button from '../components/Button';
 import Typography from '../components/Typography';
-import {ReactComponent as Logo} from '../images/gurudesklogo.svg';
-import { NavLink as RouterLink } from 'react-router-dom';
-import Link from '@mui/material/Link';
+import img1 from '../images/1.png';
+import img2 from '../images/2.png';
+import img3 from '../images/3.png';
 
 const item = {
   display: 'flex',
@@ -63,7 +62,7 @@ function ProductHowItWorks() {
             <Grid item xs={12} md={4}>
               <Box sx={item}>
                 <Box sx={number}></Box>
-                <Logo/>
+                <img src={img1} style={{width: "50%"}}></img>
                 <Typography variant="h5" align="center">
                   Ticket Management
                 </Typography>
@@ -71,7 +70,7 @@ function ProductHowItWorks() {
             </Grid>
             <Grid item xs={12} md={4}>
               <Box sx={item}>
-                <Logo/>
+              <img src={img2} style={{width: "50%"}}></img>
                 <Typography variant="h5" align="center">
                   Live Chat with customers
                 </Typography>
@@ -80,7 +79,7 @@ function ProductHowItWorks() {
             <Grid item xs={12} md={4}>
               <Box sx={item}>
                 <Box sx={number}></Box>
-                <Logo/>
+                <img src={img3} style={{width: "50%"}}></img>
                 <Typography variant="h5" align="center">
                   Quick Setup and a User-Friendly Experience
                 </Typography>

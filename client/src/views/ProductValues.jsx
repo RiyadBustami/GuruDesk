@@ -5,6 +5,9 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import Typography from '../components/Typography';
 import {ReactComponent as Logo} from '../images/gurudesklogo.svg';
+import img4 from '../images/4.png';
+import img5 from '../images/5.png';
+import img6 from '../images/6.png';
 
 const item = {
   display: 'flex',
@@ -33,7 +36,7 @@ function ProductValues() {
         <Grid container spacing={5}>
           <Grid item xs={12} md={4}>
             <Box sx={item}>
-              <Logo/>
+            <img src={img4} style={{width: "50%"}}></img>
               <Typography variant="h6" sx={{ my: 5 }} align="center">
                 Give customers the best support
               </Typography>
@@ -46,7 +49,7 @@ function ProductValues() {
           </Grid>
           <Grid item xs={12} md={4}>
             <Box sx={item}>
-              <Logo/>
+            <img src={img5} style={{width: "50%"}}></img>
               <Typography variant="h6" sx={{ my: 5 }} align="center">
                 Save Time and Increase Efficiency
               </Typography>
@@ -59,7 +62,7 @@ function ProductValues() {
           </Grid>
           <Grid item xs={12} md={4}>
             <Box sx={item}>
-              <Logo/>
+            <img src={img6} style={{width: "50%"}}></img>
               <Typography variant="h6" sx={{ my: 5 }} align="center">
                 Become an industry leader
               </Typography>
