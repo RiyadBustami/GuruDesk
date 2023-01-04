@@ -21,7 +21,7 @@ const TicketForm = () => {
         },{withCredentials:true})
         .then(res=>{
             console.log(res);
-            navigate("/dashboard/tickets")
+            navigate("/dashboard")
         })
         .catch(err=>console.log(err))
     }
