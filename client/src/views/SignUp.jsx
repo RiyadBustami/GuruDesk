@@ -8,10 +8,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {ReactComponent as Logo} from '../images/gurudesklogo.svg';
+import { ReactComponent as Logo } from '../images/gurudesklogo.svg';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
     return (
@@ -41,11 +41,11 @@ const SignUp = () => {
     const [confirmPWError, setConfirmPWError] = useState("");
     const navigate = useNavigate();
 
-    useEffect(() => {
-        axios.get('http://localhost:8000/api/loggedin', { withCredentials: true })
-            .then(res => navigate("/dashboard"))
-            .catch(err => console.log(err));
-    }, []);
+    // useEffect(() => {
+    //     axios.get('http://localhost:8000/api/loggedin', { withCredentials: true })
+    //         .then(res => console.log(res))
+    //         .catch(err => console.log(err));
+    // }, []);
 
     const register = e => {
         e.preventDefault();
@@ -56,12 +56,20 @@ const SignUp = () => {
             password,
             confirmPassword
         }, { withCredentials: true })
-        .then(res=>navigate("/dashboard"))
-        .catch(err=>console.log(err))
+            .then(res => {
+                if (res.data.code === 11000) {
+                    setEmailError("Email already registered!");
+                }
+                else {
+                    navigate("/dashboard");
+                }
+
+            })
+            .catch(err => console.log(err))
     }
 
     const handleFirstName = (e) => {
-        if(e.target.value.length<2 && e.target.value.length>0){
+        if (e.target.value.length < 2 && e.target.value.length > 0) {
             setFNameError("First Name must be at least 2 characters")
         } else {
             setFNameError("");
@@ -70,7 +78,7 @@ const SignUp = () => {
     }
 
     const handleLastName = (e) => {
-        if(e.target.value.length<2 && e.target.value.length>0){
+        if (e.target.value.length < 2 && e.target.value.length > 0) {
             setLNameError("Last Name must be at least 2 characters");
         } else {
             setLNameError("");
@@ -80,7 +88,7 @@ const SignUp = () => {
 
     const handlePW = (e) => {
         const regex = new RegExp("^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
-        if (!regex.test(e.target.value) && e.target.value.length>0){
+        if (!regex.test(e.target.value) && e.target.value.length > 0) {
             setPasswordError("Your password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number, 1 special character")
         } else {
             setPasswordError("");
@@ -89,7 +97,7 @@ const SignUp = () => {
     }
     const handleEmail = (e) => {
         const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-        if (!regex.test(e.target.value) && e.target.value.length>0){
+        if (!regex.test(e.target.value) && e.target.value.length > 0) {
             setEmailError("Please enter a valid email")
         } else {
             setEmailError("");
@@ -98,12 +106,12 @@ const SignUp = () => {
     }
 
     const handleConfirmPW = (e) => {
-        if(e.target.value!==password && e.target.value.length>0) {
+        if (e.target.value !== password && e.target.value.length > 0) {
             setConfirmPWError("The password confirmation does not match");
         } else {
             setConfirmPWError("");
             setConfirmPassword(e.target.value);
-        } 
+        }
     }
 
     return (
@@ -118,7 +126,7 @@ const SignUp = () => {
                         alignItems: 'center',
                     }}
                 >
-                    <Logo/>
+                    <Logo />
                     <Typography component="h1" variant="h5">
                         Sign up
                     </Typography>
@@ -127,116 +135,116 @@ const SignUp = () => {
                             <Grid item xs={12} sm={6}>
                                 {
                                     fNameError ?
-                                    <TextField
-                                    error
-                                    required
-                                    fullWidth
-                                    id="outlined-error-helper-text"
-                                    label="First Name"
-                                    onChange={handleFirstName}
-                                    helperText={fNameError}
-                                /> :
-                                <TextField
-                                    autoComplete="given-name"
-                                    onChange={handleFirstName}
-                                    required
-                                    fullWidth
-                                    id="firstName"
-                                    label="First Name"
-                                    autoFocus
-                                />
+                                        <TextField
+                                            error
+                                            required
+                                            fullWidth
+                                            id="outlined-error-helper-text"
+                                            label="First Name"
+                                            onChange={handleFirstName}
+                                            helperText={fNameError}
+                                        /> :
+                                        <TextField
+                                            autoComplete="given-name"
+                                            onChange={handleFirstName}
+                                            required
+                                            fullWidth
+                                            id="firstName"
+                                            label="First Name"
+                                            autoFocus
+                                        />
                                 }
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 {
                                     lNameError ?
-                                <TextField
-                                    error
-                                    required
-                                    fullWidth
-                                    id="outlined-error-helper-text"
-                                    label="Last Name"
-                                    onChange={handleLastName}
-                                    helperText={lNameError}
-                                /> :
-                                <TextField
-                                    required
-                                    fullWidth
-                                    id="lastName"
-                                    label="Last Name"
-                                    onChange={handleLastName}
-                                    autoComplete="family-name"
-                                />
+                                        <TextField
+                                            error
+                                            required
+                                            fullWidth
+                                            id="outlined-error-helper-text"
+                                            label="Last Name"
+                                            onChange={handleLastName}
+                                            helperText={lNameError}
+                                        /> :
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            id="lastName"
+                                            label="Last Name"
+                                            onChange={handleLastName}
+                                            autoComplete="family-name"
+                                        />
                                 }
                             </Grid>
                             <Grid item xs={12}>
                                 {
-                                    emailError ? 
-                                <TextField
-                                    error
-                                    required
-                                    fullWidth
-                                    id="outlined-error-helper-text"
-                                    label="Email Address"
-                                    onChange={handleEmail}
-                                    helperText={emailError}
-                                /> :
-                                <TextField
-                                    required
-                                    fullWidth
-                                    id="email"
-                                    label="Email Address"
-                                    onChange={handleEmail}
-                                    autoComplete="email"
-                                />
+                                    emailError ?
+                                        <TextField
+                                            error
+                                            required
+                                            fullWidth
+                                            id="outlined-error-helper-text"
+                                            label="Email Address"
+                                            onChange={handleEmail}
+                                            helperText={emailError}
+                                        /> :
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            id="email"
+                                            label="Email Address"
+                                            onChange={handleEmail}
+                                            autoComplete="email"
+                                        />
                                 }
                             </Grid>
                             <Grid item xs={12}>
                                 {
                                     passwordError ?
-                                    <TextField
-                                    error
-                                    required
-                                    fullWidth
-                                    id="outlined-error-helper-text"
-                                    label="Password"
-                                    type="password"
-                                    onChange={handlePW}
-                                    helperText={passwordError}
-                                    /> :
-                                    <TextField
-                                        required
-                                        fullWidth
-                                        onChange={handlePW}
-                                        label="Password"
-                                        type="password"
-                                        id="password"
-                                        autoComplete="new-password"
-                                    />
+                                        <TextField
+                                            error
+                                            required
+                                            fullWidth
+                                            id="outlined-error-helper-text"
+                                            label="Password"
+                                            type="password"
+                                            onChange={handlePW}
+                                            helperText={passwordError}
+                                        /> :
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            onChange={handlePW}
+                                            label="Password"
+                                            type="password"
+                                            id="password"
+                                            autoComplete="new-password"
+                                        />
                                 }
                             </Grid>
                             <Grid item xs={12}>
                                 {
-                                    confirmPWError ? 
-                                    <TextField
-                                    error
-                                    required
-                                    fullWidth
-                                    id="outlined-error-helper-text"
-                                    label="Confirm Password"
-                                    type="password"
-                                    onChange={handleConfirmPW}
-                                    helperText={confirmPWError}
-                                    /> :
-                                    <TextField
-                                        required
-                                        fullWidth
-                                        onChange={handleConfirmPW}
-                                        label="Confirm Password"
-                                        type="password"
-                                        id="confirmPassword"
-                                        autoComplete="new-password"
-                                    />
+                                    confirmPWError ?
+                                        <TextField
+                                            error
+                                            required
+                                            fullWidth
+                                            id="outlined-error-helper-text"
+                                            label="Confirm Password"
+                                            type="password"
+                                            onChange={handleConfirmPW}
+                                            helperText={confirmPWError}
+                                        /> :
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            onChange={handleConfirmPW}
+                                            label="Confirm Password"
+                                            type="password"
+                                            id="confirmPassword"
+                                            autoComplete="new-password"
+                                        />
                                 }
                             </Grid>
                         </Grid>
