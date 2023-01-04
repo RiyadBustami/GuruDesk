@@ -9,7 +9,7 @@ module.exports.authenticate = (request, response, next) => {
         if (err) {
             response.status(401).json({ verified: false });
         } else {
-            if(request.body.description){request.body.requester = payload.id;}
+            if (request.body.description) { request.body.requester = payload.id; }
             next();
         }
     });
@@ -84,16 +84,20 @@ module.exports.canCreateComment = (request, response, next) => {
             response.status(401).json({ verified: false });
         } else {
             const ticket = await Ticket.findById(request.body.ticket);
-            console.log(ticket.requester._id);
-            console.log(ticket.requester._id == payload.id && ticket.status !== "Closed");
-            console.log(ticket.assignee._id == payload.id && ticket.status !== "Closed");
-            if (ticket.requester._id == payload.id && ticket.status !== "Closed") {
-                next();
-            } else if (ticket.assignee._id == payload.id && ticket.status !== "Closed") {
-                next();
-            }
-            else {
-                response.status(401).json({ verified: false });
+            if (ticket) {
+                console.log(ticket.requester._id);
+                console.log(ticket.requester._id == payload.id && ticket.status !== "Closed");
+                console.log(ticket?.assignee?._id == payload.id && ticket.status !== "Closed");
+                if (ticket.requester._id == payload.id && ticket.status !== "Closed") {
+                    request.body.user=payload.id;
+                    console.log(request.body.user);
+                    next();
+                } else if (ticket?.assignee?._id == payload.id && ticket.status !== "Closed") {
+                    next();
+                }
+                else {
+                    response.status(401).json({ verified: false });
+                }
             }
         }
     });
