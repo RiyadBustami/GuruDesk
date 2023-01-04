@@ -4,13 +4,14 @@ import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 
 const TicketForm = () => {
     const [subject, setSubject] = useState("");
     const [description, setDescription] = useState("");
     const [subjectError, setSubjectError] = useState("");
     const [descriptionError, setDescriptionError] = useState("");
+    const [myTickets, setMyTickets, user] = useOutletContext();
     const navigate = useNavigate();
 
     const handleSubmit = e => {
@@ -21,7 +22,9 @@ const TicketForm = () => {
         },{withCredentials:true})
         .then(res=>{
             console.log(res);
-            navigate("/dashboard")
+            res.data.requester=user;
+            setMyTickets([res.data,...myTickets]);
+            navigate("/dashboard");
         })
         .catch(err=>console.log(err))
     }

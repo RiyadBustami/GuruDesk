@@ -5,15 +5,19 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { useParams } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const TicketView = () => {
     const bottomRef = useRef(null);
     const [ticket, setTicket] = useState({});
     const [loaded, setLoaded] = useState(false);
+    const [status, setStatus] = useState('');
+    const [priority, setPriority] = useState('');
     const [user, setUser] = useState({});
     const { id } = useParams();
+    const [myTickets, setMyTickets] = useOutletContext();
+    const [comment, setComment] = useState("");
 
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -34,11 +38,61 @@ const TicketView = () => {
 
     const assignMe = (e) => {
         e.preventDefault();
-        axios.put("http://localhost:8000/api/tickets/"+id,{assignee:user.id},{withCredentials:true})
-            .then(res=>{
-                setTicket({...ticket, assignee:user});
+        const confirmed = window.confirm("Are you sure?");
+        if (confirmed) {
+            axios.put("http://localhost:8000/api/tickets/" + id, { assignee: user.id }, { withCredentials: true })
+                .then(res => {
+                    
+                    setTicket({ ...ticket, assignee: user });
+                    setMyTickets(myTickets.map((element) => {
+                        if (element._id === ticket._id) {
+                            element.assignee = user;
+                            element.status = "Open";
+                        }
+                        return element;
+                    }))
+                })
+                .catch(err => console.log(err))
+        }
+    }
+    const sendComment = (e)=>{
+        if(comment.length>0){
+            axios.post("http://localhost:8000/api/comments",{ticket:ticket._id, text:comment},{withCredentials:true})
+                .then((res)=>console.log(res))
+                .catch(err=>console.log(err))
+        }
+    }
+
+    const handleStatusSubmit = (e) => {
+        e.preventDefault();
+        axios.put("http://localhost:8000/api/tickets/" + id, { status }, { withCredentials: true })
+            .then(res => {
+                setTicket({ ...ticket, status: status });
+                setMyTickets(myTickets.map((element) => {
+                    if (element._id === ticket._id) {
+                        element.status = status;
+                    }
+                    return element;
+                }));
+                setStatus('');
             })
-            .catch(err=>console.log(err))
+            .catch(err => console.log(err))
+    }
+
+    const handlePriortySubmit = (e) => {
+        e.preventDefault();
+        axios.put("http://localhost:8000/api/tickets/" + id, { priority }, { withCredentials: true })
+            .then(res => {
+                setTicket({ ...ticket, priority: priority });
+                setMyTickets(myTickets.map((element) => {
+                    if (element._id === ticket._id) {
+                        element.priority = priority;
+                    }
+                    return element;
+                }));
+                setPriority('');
+            })
+            .catch(err => console.log(err))
     }
 
     return (
@@ -59,7 +113,6 @@ const TicketView = () => {
                 {/* scroll div */}
                 <div className='mx-2 my-4' style={{ overflowY: "scroll", height: "300px", position: "relative" }} data-mdb-perfect-scrollbar='true'>
                     {/* comment client */}
-
                     <div className="card mx-1 my-3" style={{ border: '1px solid #f15412' }} >
                         <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f15412' }}>
                             <div>Sender</div>
@@ -108,9 +161,11 @@ const TicketView = () => {
                         rows={4}
                         variant="standard"
                         fullWidth
+                        onChange={e=>setComment(e.target.value)}
+                        value={comment}
                     />
                     <div className='text-end mt-3'>
-                        <Button variant="contained" type="submit">Send</Button>
+                        <Button variant="contained" type="submit" onClick={sendComment}>Send</Button>
                     </div>
                 </div>
             </div>
@@ -136,29 +191,37 @@ const TicketView = () => {
                 {
                     user.isAgent && <>
                         {
-                            ticket.assignee&&ticket?.assignee._id === user.id &&
-                            <form className='mt-4'>
+                            ticket.assignee && ticket?.assignee._id === user.id &&
+                            <><form className='mt-4' onSubmit={handleStatusSubmit}>
                                 <FormControl variant="standard" fullWidth>
                                     <InputLabel id="demo-simple-select-standard-label">Change Ticket Status</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-standard-label"
                                         id="demo-simple-select-standard"
                                         label="Age"
-                                    // onChange={handleChange}
+                                        onChange={e => setStatus(e.target.value)}
+                                        value={status}
                                     >
+                                        <MenuItem value="New">New</MenuItem>
                                         <MenuItem value="Open">Open</MenuItem>
                                         <MenuItem value="Pending">Pending</MenuItem>
                                         <MenuItem value="Solved">Solved</MenuItem>
                                         <MenuItem value="Closed">Closed</MenuItem>
                                     </Select>
                                 </FormControl>
+                                <div className='text-end mt-4'>
+                                    <Button variant="contained" type="submit">Submit</Button>
+                                </div>
+                                </form>
+                                <form className='mt-4' onSubmit={handlePriortySubmit}>
                                 <FormControl variant="standard" fullWidth sx={{ mt: 3 }}>
                                     <InputLabel id="demo-simple-select-standard-label">Change Ticket Priority</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-standard-label"
                                         id="demo-simple-select-standard"
                                         label="Age"
-                                    // onChange={handleChange}
+                                        onChange={e => setPriority(e.target.value)}
+                                        value={priority}
                                     >
                                         <MenuItem value="Low">Low</MenuItem>
                                         <MenuItem value="Normal">Normal</MenuItem>
@@ -168,7 +231,7 @@ const TicketView = () => {
                                 <div className='text-end mt-4'>
                                     <Button variant="contained" type="submit">Submit</Button>
                                 </div>
-                            </form>
+                            </form></>
                         }
                         {
                             !ticket?.assignee &&

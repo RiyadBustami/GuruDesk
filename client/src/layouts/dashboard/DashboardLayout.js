@@ -71,7 +71,7 @@ export default function DashboardLayout(props) {
 
       {loaded && <Nav user={user} openNav={open} onCloseNav={() => setOpen(false)} />}
       <Main>
-        <Outlet context={[myTickets, setMyTickets]} />
+        <Outlet context={[myTickets, setMyTickets,user]} />
       </Main>
     </StyledRoot>
   );

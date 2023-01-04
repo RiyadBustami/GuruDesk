@@ -19,6 +19,16 @@ function AppAppBar() {
                 <Toolbar sx={{ justifyContent: 'space-between' }}>
                     <Box sx={{ flex: -3 }} />
                     <img src={logo} ></img>
+                    <Link
+                        variant="h6"
+                        underline="none"
+                        color="inherit"
+                        href="/premium-themes/onepirate/"
+                        sx={{ fontSize: 24 }}
+                    >
+                        <img src={logo} style={{width:'220px'}}></img>
+
+                    </Link>
                     <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
                         <Link
                             Link component={RouterLink} to="/login"
