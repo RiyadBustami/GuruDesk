@@ -56,72 +56,38 @@ function ProductHowItWorks() {
           }}
         />
         <Typography variant="h4" marked="center" component="h2" sx={{ mb: 14 }}>
-          How it works
+          Features
         </Typography>
         <div>
           <Grid container spacing={5}>
             <Grid item xs={12} md={4}>
               <Box sx={item}>
                 <Box sx={number}></Box>
-                {/* <Box
-                  component="img"
-                  src="/static/themes/onepirate/productHowItWorks1.svg"
-                  alt="suitcase"
-                  sx={image}
-                /> */}
                 <Logo/>
                 <Typography variant="h5" align="center">
-                  Appointment every Wednesday 9am.
+                  Ticket Management
                 </Typography>
               </Box>
             </Grid>
             <Grid item xs={12} md={4}>
               <Box sx={item}>
-                {/* <Box sx={number}>2.</Box> */}
-                {/* <Box
-                  component="img"
-                  src=""
-                  alt="graph"
-                  sx={image}
-                /> */}
                 <Logo/>
                 <Typography variant="h5" align="center">
-                  First come, first served. Our offers are in limited quantities, so
-                  be quick.
+                  Live Chat with customers
                 </Typography>
               </Box>
             </Grid>
             <Grid item xs={12} md={4}>
               <Box sx={item}>
                 <Box sx={number}></Box>
-                {/* <Box
-                  component="img"
-                  src="/static/themes/onepirate/productHowItWorks3.svg"
-                  alt="clock"
-                  sx={image}
-                /> */}
                 <Logo/>
                 <Typography variant="h5" align="center">
-                  {'New offers every week. New experiences, new surprises. '}
-                  {'Your Sundays will no longer be alike.'}
+                  Quick Setup and a User-Friendly Experience
                 </Typography>
               </Box>
             </Grid>
           </Grid>
         </div>
-        <Link component={RouterLink} to="/registration" underline='none'>
-        <Button
-          color="secondary"
-          size="large"
-          variant="contained"
-          component="a"
-        //   href="/premium-themes/onepirate/sign-up/"
-          sx={{ mt: 8 }}
-          style={{color: "#fff"}}
-        >
-          Get started
-        </Button>
-        </Link>
       </Container>
     </Box>
   );
