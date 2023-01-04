@@ -108,9 +108,9 @@ const TicketView = () => {
     }
 
     return (
-        loaded && <div style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: 'white', padding: '15px', minWidth: '100%' }}>
+        loaded && <div style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: 'white', padding: '15px'}}>
             {/* main section with ticket description and comments */}
-            <div>
+            <div style={{ minWidth: '65%' }}>
                 {/* ticket description */}
                 <div className="card mx-2">
                     <div className="card-header" style={{ backgroundColor: '#1778f2', color: 'white' }}>
