@@ -53,7 +53,7 @@ export default function AccountPopover({user}) {
       <IconButton
         onClick={handleOpen}
       >
-      <div style={{borderRadius:"50%", padding:"5px", backgroundColor:"#f15412", color:"white"}}>{getInitials()}</div>
+      <div style={{borderRadius:"50%", padding:"5px", backgroundColor:"#f15412", color:"white", width:"40px", height:"40px", fontFamily:"sans-serif", fontSize:"1.3rem"}}>{getInitials()}</div>
       </IconButton>
 
       <Popover

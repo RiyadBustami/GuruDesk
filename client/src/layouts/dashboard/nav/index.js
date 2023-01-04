@@ -63,7 +63,7 @@ export default function Nav({user ,openNav, onCloseNav }) {
       <Box sx={{ mb: 5, mx: 2.5 }}>
         <Link underline="none">
           <StyledAccount>
-            <div style={{borderRadius:"50%", padding:"7px", width:"35px", height:"35px", backgroundColor:"#f15412", color:"white"}}>{getInitials()}</div>
+          <div style={{borderRadius:"50%", padding:"7px", width:"40px", height:"40px", backgroundColor:"#f15412", color:"white", fontFamily:"sans-serif", fontSize:"1.2rem"}}>{getInitials()}</div>
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
                 {user.name}
@@ -81,8 +81,8 @@ export default function Nav({user ,openNav, onCloseNav }) {
       </Link>   
       </Box>
       <Box  sx={{ mb: 2, mx: 2.5 }} display="flex" justifyContent="flex-end">
-      <Link  component={RouterLink} to="/dashboard/admin/users/upgrade">
-      {user.isAdmin&&<Button variant="contained">Upgrade Users</Button>}
+      <Link component={RouterLink} to="/dashboard/admin/users/upgrade">
+      {user.isAdmin&&<Button variant="text">Upgrade Users</Button>}
       </Link>  
       </Box>
       {/* navbar list */}
