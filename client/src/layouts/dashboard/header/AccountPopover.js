@@ -40,7 +40,7 @@ export default function AccountPopover({user}) {
 
   const handleLogout = (e) => {
     axios.get("http://localhost:8000/api/logout", { withCredentials: true })
-      .then(res=>{navigate("/login")})
+      .then(res=>{navigate("/")})
       .catch(err=>console.log(err))
   }
 
