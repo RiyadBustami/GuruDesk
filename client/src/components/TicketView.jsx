@@ -190,7 +190,7 @@ const TicketView = () => {
                         </div>
                     </div> */}
                 </div>
-                <div className='mx-2' style={{ border: '1px lightgray solid', borderRadius: '5px', padding: '15px' }}>
+                {(ticket?.assignee?._id===user?._id||ticket?.requester?._id===user?._id)&&<div className='mx-2' style={{ border: '1px lightgray solid', borderRadius: '5px', padding: '15px' }}>
                     <TextField
                         id="standard-multiline-static"
                         label="Comment"
@@ -204,7 +204,7 @@ const TicketView = () => {
                     <div className='text-end mt-3'>
                         <Button variant="contained" type="submit" onClick={sendComment}>Send</Button>
                     </div>
-                </div>
+                </div>}
             </div>
             {/* side bar with ticket details */}
             <div className='mx-2'>
