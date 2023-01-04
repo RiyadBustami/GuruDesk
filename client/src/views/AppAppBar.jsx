@@ -24,7 +24,7 @@ function AppAppBar() {
                         href="/premium-themes/onepirate/"
                         sx={{ fontSize: 24 }}
                     >
-                        <img src={logo} ></img>
+                        <img src={logo} style={{width:'220px'}}></img>
 
                     </Link>
                     <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>

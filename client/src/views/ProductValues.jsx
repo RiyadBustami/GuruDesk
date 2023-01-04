@@ -19,77 +19,57 @@ function ProductValues() {
       component="section"
       sx={{ display: 'flex', overflow: 'hidden', bgcolor: '' }}
     >
-      <Container sx={{ mt: 15, mb: 30, display: 'flex', position: 'relative' }}>
+      <Container sx={{ mt: 10, mb: 15, display: 'flex', position: 'relative', flexDirection: 'column', alignItems: 'center',}}>
         <Box
           component="img"
           src="/static/themes/onepirate/productCurvyLines.png"
           alt="curvy lines"
           sx={{ pointerEvents: 'none', position: 'absolute', top: -180 }}
         />
+            <Typography variant="h4" marked="center" component="h2" sx={{ mb: 14 }}>
+            Why Choose GuruDesk?
+            </Typography>
+            <div>
         <Grid container spacing={5}>
           <Grid item xs={12} md={4}>
             <Box sx={item}>
-              {/* <Box
-                component="img"
-                src="/static/themes/onepirate/productValues1.svg"
-                alt="suitcase"
-                sx={{ height: 55 }}
-              /> */}
               <Logo/>
-              <Typography variant="h6" sx={{ my: 5 }}>
-                The best luxury hotels
+              <Typography variant="h6" sx={{ my: 5 }} align="center">
+                Give customers the best support
               </Typography>
-              <Typography variant="h5">
+              <Typography variant="h5" align="center">
                 {
-                  'From the latest trendy boutique hotel to the iconic palace with XXL pool'
-                }
-
-                {
-                  ', go for a mini-vacation just a few subway stops away from your home.'
+                  'Our ultimate goal is to help you make your customers a little bit happier with every message they receive.'
                 }
               </Typography>
             </Box>
           </Grid>
           <Grid item xs={12} md={4}>
             <Box sx={item}>
-              {/* <Box
-                component="img"
-                src="/static/themes/onepirate/productValues2.svg"
-                alt="graph"
-                sx={{ height: 55 }}
-              /> */}
               <Logo/>
-              <Typography variant="h6" sx={{ my: 5 }}>
-                New experiences
+              <Typography variant="h6" sx={{ my: 5 }} align="center">
+                Save Time and Increase Efficiency
               </Typography>
-              <Typography variant="h5">
+              <Typography variant="h5" align="center">
                 {
-                  'Privatize a pool, take a Japanese bath or wake up in 900m2 of garden… '
+                  'We help you maximize your productivity. Your team can manage their tickets and reply to customer messages all from the same place.'
                 }
-
-                {'your Sundays will not be alike.'}
               </Typography>
             </Box>
           </Grid>
           <Grid item xs={12} md={4}>
             <Box sx={item}>
-              {/* <Box
-                component="img"
-                src="/static/themes/onepirate/productValues3.svg"
-                alt="clock"
-                sx={{ height: 55 }}
-              /> */}
               <Logo/>
-              <Typography variant="h6" sx={{ my: 5 }}>
-                Exclusive rates
+              <Typography variant="h6" sx={{ my: 5 }} align="center">
+                Become an industry leader
               </Typography>
-              <Typography variant="h5">
-                {'By registering, you will access specially negotiated rates '}
-                {'that you will not find anywhere else.'}
+              <Typography variant="h5" align="center">
+                {'We provide the software so you can focus on meeting your customer needs and keeping your business in sync.'}
               </Typography>
             </Box>
           </Grid>
         </Grid>
+            </div>
       </Container>
     </Box>
   );

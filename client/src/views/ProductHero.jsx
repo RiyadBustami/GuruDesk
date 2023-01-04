@@ -10,9 +10,9 @@ export default function ProductHero() {
     return (
         <Box style={{ display: 'flex' }}
         >
-            <Box style={{ width: "60%", marginLeft: "10%", marginTop: "5%", textAlign: "center" }}>
-                <Typography align="center" variant="h2" marked="center">
-                    Upgrade your Sundays
+            <Box style={{ width: "60%", marginLeft: "10%", marginTop: "4%", marginBottom:"4%", textAlign: "center" }}>
+                <Typography align="center" variant="h4" marked="center">
+                    A simple ticketing system for a team like yours
                 </Typography>
                 <Typography
                     color="black"
@@ -20,7 +20,7 @@ export default function ProductHero() {
                     variant="h5"
                     sx={{ mb: 4, mt: { sx: 4, sm: 10 } }}
                 >
-                    Enjoy secret offers up to -70% off the best luxury hotels every Sunday.
+                    Manage all your customer messages in one place. Build better bonds automatically.
                 </Typography>
                 <Link component={RouterLink} to="/registration" underline="none">
                     <Button
@@ -31,12 +31,9 @@ export default function ProductHero() {
                         sx={{ minWidth: 200 }}
                         style={{ color: "#fff" }}
                     >
-                        Register
+                        Free Trial
                     </Button>
                 </Link>
-                <Typography variant="body2" color="black" sx={{ mt: 2 }}>
-                    Discover the experience
-                </Typography>
             </Box>
             <Box>
                 <img src={backgroundimg} style={{ width: "60%", marginLeft: "30%" }}></img>
