@@ -17,4 +17,13 @@ require('./routes/user.routes')(app);
 require('./routes/ticket.routes')(app);
 require('./routes/comment.routes')(app);
 
-app.listen(port, () => console.log('Listening on port: ',port));
+const server = app.listen(port, () => console.log('Listening on port: ',port));
+const io = require('socket.io')(server, {cors:true});
+io.on("connection", socket=> {
+    const ticketId = socket.handshake.query.ticketId
+    console.log("someone connected on this id "+ticketId)
+    socket.on(ticketId, data=>socket.broadcast.emit(ticketId, data));
+    // socket.join(ticketId);
+    // io.in(ticketId).emit('comment', "hello from the server"+ticketId);
+    // io.on('comment',data=>console.log(data));
+})
