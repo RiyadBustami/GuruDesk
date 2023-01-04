@@ -4,7 +4,9 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import Typography from '../components/Typography';
-import {ReactComponent as Logo} from '../images/gurudesklogo.svg';
+import Button from '../components/Button';
+import { NavLink as RouterLink } from 'react-router-dom';
+import { Link } from '@mui/material';
 import img4 from '../images/4.png';
 import img5 from '../images/5.png';
 import img6 from '../images/6.png';
@@ -71,6 +73,26 @@ function ProductValues() {
               </Typography>
             </Box>
           </Grid>
+          <Grid item xs={12} md={4}>
+              <Box sx={item} align="center">
+            </Box>
+            </Grid>
+          <Grid item xs={12} md={4}>
+              <Box sx={item} align="center">
+            <Link component={RouterLink} to="/registration" underline="none">
+                    <Button
+                        color="secondary"
+                        variant="contained"
+                        size="large"
+                        component="a"
+                        sx={{ minWidth: 200 }}
+                        style={{ color: "#fff" }}
+                    >
+                        Get Started
+                    </Button>
+                </Link>
+            </Box>
+            </Grid>
         </Grid>
             </div>
       </Container>
