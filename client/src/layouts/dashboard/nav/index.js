@@ -78,8 +78,12 @@ export default function Nav({user ,openNav, onCloseNav }) {
       <Box  sx={{ mb: 2, mx: 2.5 }} display="flex" justifyContent="flex-end">
       <Link  component={RouterLink} to="tickets/create">
       <Button variant="contained">+ New Ticket</Button>
-      </Link>
-      
+      </Link>   
+      </Box>
+      <Box  sx={{ mb: 2, mx: 2.5 }} display="flex" justifyContent="flex-end">
+      <Link  component={RouterLink} to="/dashboard/admin/users/upgrade">
+      {user.isAdmin&&<Button variant="contained">Upgrade Users</Button>}
+      </Link>  
       </Box>
       {/* navbar list */}
 
