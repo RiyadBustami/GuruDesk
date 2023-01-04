@@ -21,10 +21,12 @@ const TicketView = () => {
     const [comment, setComment] = useState("");
     const [ticketComments, setTicketComments] = useState([]);
     const [socket] = useState(() => io(':8000', { query: { ticketId: id } }));
+    const [refresh, setRefresh] = useState(0);
 
     useEffect(() => {
         // socket.emit('comment',"hello from tizi",id);
         // socket.on('comment', data=>console.log(data))
+        socket.on(id, data => setRefresh(refresh+1));
         console.log(ticketComments);
         return () => socket.disconnect(true);
     }, [])
@@ -41,15 +43,13 @@ const TicketView = () => {
                         axios.get("http://localhost:8000/api/comments/ticket/" + id, { withCredentials: true })
                             .then(res => {
                                 setTicketComments(res.data);
-                                console.log(res.data);
                                 setLoaded(true);
-                                socket.on(id, data => setTicketComments( res.data.concat(data)));
                             })
                     })
                     .catch(err => console.log(err))
             })
             .catch(err => { console.log(err) });
-    }, [id]);
+    }, [id,ticketComments]);
 
     const assignMe = (e) => {
         e.preventDefault();
