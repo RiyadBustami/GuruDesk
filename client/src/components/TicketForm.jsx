@@ -22,8 +22,9 @@ const TicketForm = () => {
         },{withCredentials:true})
         .then(res=>{
             console.log(res);
-            setMyTickets(myTickets.concat(res.data))
-            navigate("/dashboard")
+            res.data.requester=user;
+            setMyTickets([...myTickets,res.data]);
+            navigate("/dashboard");
         })
         .catch(err=>console.log(err))
     }
