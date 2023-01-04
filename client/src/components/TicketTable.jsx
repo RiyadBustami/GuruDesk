@@ -37,15 +37,16 @@ const TicketTable = () => {
 
     return (
         <div className='mx-4'>
-            {user?.isAgent&&<TableContainer component={Paper}>
+        {user?.isAgent&&<TableContainer component={Paper}>
+                <h2 className='my-4 text-center'>My tickets</h2>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow style={{}}>
-                            <TableCell>Requester</TableCell>
-                            <TableCell>Subject</TableCell>
-                            <TableCell>Priority</TableCell>
-                            <TableCell>Status</TableCell>
-                            <TableCell>Submitted on</TableCell>
+                            <TableCell width="25%">Requester</TableCell>
+                            <TableCell width="25%">Subject</TableCell>
+                            <TableCell width="15%">Priority</TableCell>
+                            <TableCell width="15%">Status</TableCell>
+                            <TableCell width="20%">Submitted on</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -71,16 +72,16 @@ const TicketTable = () => {
                     </TableBody>
                 </Table>
             </TableContainer>}
-            <p></p>
+            <h2 className='my-4 text-center'>All tickets</h2>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow style={{}}>
-                            <TableCell>Requester</TableCell>
-                            <TableCell>Subject</TableCell>
-                            <TableCell>Agent</TableCell>
-                            <TableCell>Status</TableCell>
-                            <TableCell>Submitted on</TableCell>
+                            <TableCell width="20%">Requester</TableCell>
+                            <TableCell width="20%">Subject</TableCell>
+                            <TableCell width="20%">Agent</TableCell>
+                            <TableCell width="20%">Status</TableCell>
+                            <TableCell width="20%">Submitted on</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
