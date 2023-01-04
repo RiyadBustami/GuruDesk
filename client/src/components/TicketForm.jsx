@@ -22,7 +22,7 @@ const TicketForm = () => {
         },{withCredentials:true})
         .then(res=>{
             console.log(res);
-            setMyTickets(myTickets.concat({subject,description,requester:user, status:"New", createdAt:new Date()}))
+            setMyTickets(myTickets.concat(res.data))
             navigate("/dashboard")
         })
         .catch(err=>console.log(err))
