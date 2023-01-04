@@ -5,6 +5,7 @@ import AppBar from '../components/AppBar';
 import Toolbar from '../components/ToolBar';
 import { NavLink as RouterLink } from 'react-router-dom';
 import logo from '../images/gurudesk-white.png';
+
 const rightLink = {
     fontSize: 16,
     color: 'common.white',
@@ -17,16 +18,7 @@ function AppAppBar() {
             <AppBar position="fixed">
                 <Toolbar sx={{ justifyContent: 'space-between' }}>
                     <Box sx={{ flex: -3 }} />
-                    <Link
-                        variant="h6"
-                        underline="none"
-                        color="inherit"
-                        href="/premium-themes/onepirate/"
-                        sx={{ fontSize: 24 }}
-                    >
-                        <img src={logo} ></img>
-
-                    </Link>
+                    <img src={logo} ></img>
                     <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
                         <Link
                             Link component={RouterLink} to="/login"
