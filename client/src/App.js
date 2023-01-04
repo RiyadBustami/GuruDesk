@@ -12,6 +12,7 @@ import TicketView from './components/TicketView';
 import AssignAgent from './components/AssignAgent';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import LandingPage from './pages/LandingPage';
 
 function App() {
   const [user, setUser] = useState();
@@ -19,9 +20,10 @@ function App() {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <ThemeProvider>
+    <div>
       <ScrollToTop />
       <Routes>
+      <Route path="/" element={<LandingPage/>}/>
         <Route path="/login" element={<SignIn/>}/>
         <Route path="/registration" element={<SignUp/>}/>
         <Route path="/dashboard" element={<DashboardLayout tickets={myTickets}/>}>
@@ -32,7 +34,7 @@ function App() {
           <Route path="admin/users/upgrade" element={<AssignAgent />}/>
         </Route>
       </Routes>
-    </ThemeProvider>
+      </div>
   );
 }
 
