@@ -21,11 +21,8 @@ const TicketView = () => {
     const [comment, setComment] = useState("");
     const [ticketComments, setTicketComments] = useState([]);
     const [socket] = useState(() => io(':8000', { query: { ticketId: id } }));
-    const [refresh, setRefresh] = useState(0);
 
     useEffect(() => {
-        socket.on(id, data => setRefresh(refresh+1));
-        console.log(ticketComments);
         return () => socket.disconnect(true);
     }, [])
     useEffect(() => {
@@ -72,7 +69,6 @@ const TicketView = () => {
         if (comment.length > 0) {
             axios.post("http://localhost:8000/api/comments", { user: user, ticket: ticket._id, text: comment }, { withCredentials: true })
                 .then((res) => {
-                    console.log(res);
                     res.data.user = user;
                     setTicketComments([...ticketComments, res.data]);
                     setComment("");
@@ -136,7 +132,7 @@ const TicketView = () => {
                             return <div className="card mx-1 my-3" style={{ border: '1px solid #1778f2' }} key={i} >
                                 <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #1778f2' }}>
                                     <div>{comment?.user?.firstName + " " + comment?.user?.lastName}</div>
-                                    <div style={{ fontSize: '0.9rem' }}>{new Intl.DateTimeFormat('en-GB', { dateStyle: 'short', timeStyle: 'medium', timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }).format(new Date(ticket.createdAt))}</div>
+                                    <div style={{ fontSize: '0.9rem' }}>{new Intl.DateTimeFormat('en-GB', { dateStyle: 'short', timeStyle: 'medium', timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }).format(new Date(comment.createdAt))}</div>
                                 </div>
                                 <div className="card-body">
                                     <p className="card-text">{comment?.text}</p>
@@ -147,7 +143,7 @@ const TicketView = () => {
                             return <div className="card mx-1 my-3" style={{ border: '1px solid #f15412' }} key={i}>
                                 <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f15412' }}>
                                     <div>{comment?.user?.firstName + " " + comment?.user?.lastName}</div>
-                                    <div style={{ fontSize: '0.9rem' }}>{new Intl.DateTimeFormat('en-GB', { dateStyle: 'short', timeStyle: 'medium', timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }).format(new Date(ticket.createdAt))}</div>
+                                    <div style={{ fontSize: '0.9rem' }}>{new Intl.DateTimeFormat('en-GB', { dateStyle: 'short', timeStyle: 'medium', timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }).format(new Date(comment.createdAt))}</div>
                                 </div>
                                 <div className="card-body">
                                     <p className="card-text">{comment?.text}</p>

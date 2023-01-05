@@ -85,12 +85,8 @@ module.exports.canCreateComment = (request, response, next) => {
         } else {
             const ticket = await Ticket.findById(request.body.ticket);
             if (ticket) {
-                console.log(ticket.requester._id);
-                console.log(ticket.requester._id == payload.id && ticket.status !== "Closed");
-                console.log(ticket?.assignee?._id == payload.id && ticket.status !== "Closed");
                 if (ticket.requester._id == payload.id && ticket.status !== "Closed") {
                     request.body.user=payload.id;
-                    console.log(request.body.user);
                     next();
                 } else if (ticket?.assignee?._id == payload.id && ticket.status !== "Closed") {
                     next();
