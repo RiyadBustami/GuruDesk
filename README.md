@@ -1,17 +1,30 @@
 # GuruDesk
 
-GuruDesk is a software application that is used to track and manage customer support
-requests, also known as "tickets". These requests can be related to issues, questions, or
+![](https://github.com/reinahandal/GuruDesk/blob/master/screenshots/logo.png)
+
+GuruDesk is a software application that is used to track and manage customer support requests, also known as "tickets". These requests can be related to issues, questions, or
 requests for assistance.
 
 There are 3 types of users: Admin, Support Agent and End User. 
 
 ## Functionalities and Features
 
+![](https://github.com/reinahandal/GuruDesk/blob/master/screenshots/1.png)
+
+![](https://github.com/reinahandal/GuruDesk/blob/master/screenshots/2.png)
+- User Registration and Login with Authentication and Authorization
+![](https://github.com/reinahandal/GuruDesk/blob/master/screenshots/3.png)
+- Users have access to a dashboard where they can see their submitted tickets and filter them by status
+![](https://github.com/reinahandal/GuruDesk/blob/master/screenshots/4.png)
 - End users can submit tickets for review by support agents
-- All users have access to a dashboard where they can see all tickets filtered by status
-- Support Agents can assign themselves to a ticket, and manage ticket status and priority
-- Ticket Requester and Assignee can add comments to the ticket
+![](https://github.com/reinahandal/GuruDesk/blob/master/screenshots/5.png)
+- Agents have access to a dashboard where they can see their assigned tickets and filter by status
+![](https://github.com/reinahandal/GuruDesk/blob/master/screenshots/6.png)
+- Agents can view new tickets and they can assign themselves to tickets
+![](https://github.com/reinahandal/GuruDesk/blob/master/screenshots/7.png)
+- Agents can also manage ticket status and priority, and both the requester and agent can add comments to the ticket
+![](https://github.com/reinahandal/GuruDesk/blob/master/screenshots/9.png)
+- Admins can upgrade regular users to support agents
 
 
 ## Tech Stack
