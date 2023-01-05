@@ -20,9 +20,11 @@ require('./routes/comment.routes')(app);
 const server = app.listen(port, () => console.log('Listening on port: ',port));
 const io = require('socket.io')(server, {cors:true});
 io.on("connection", socket=> {
-    const ticketId = socket.handshake.query.ticketId
+    const ticketId = socket.handshake.query.ticketId;
+    console.log("A new client connected on ticket "+ticketId);
     socket.on(ticketId, data=>io.emit(ticketId, data));
     // socket.join(ticketId);
     // io.in(ticketId).emit('comment', "hello from the server"+ticketId);
     // io.on('comment',data=>console.log(data));
+    socket.on("disconnect", data=>console.log("A client is disconnected from ticket "+ticketId))
 })
