@@ -72,7 +72,7 @@ const TicketTable = () => {
                     </TableBody>
                 </Table>
             </TableContainer>}
-            <h2 className='my-4 text-center'>All tickets</h2>
+            <h2 className='my-5 text-center'>All tickets</h2>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
