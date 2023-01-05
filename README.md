@@ -1,6 +1,6 @@
 # GuruDesk
 
-![](https://github.com/reinahandal/GuruDesk/blob/master/screenshots/logo.png)
+![](https://github.com/reinahandal/GuruDesk/blob/master/screenshots/logo2.png)
 
 GuruDesk is a software application that is used to track and manage customer support requests, also known as "tickets". These requests can be related to issues, questions, or
 requests for assistance.
