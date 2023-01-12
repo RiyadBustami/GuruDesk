@@ -23,6 +23,11 @@ const TicketView = () => {
     const [socket] = useState(() => io(':8000', { query: { ticketId: id } }));
 
     useEffect(() => {
+        const updateComments = (data) => {
+            setTicketComments((prevTicketMessages) => [...prevTicketMessages, data]);
+            
+        }
+        socket.on(id, updateComments);
         return () => socket.disconnect(true);
     }, [])
     useEffect(() => {
@@ -44,7 +49,7 @@ const TicketView = () => {
                     .catch(err => console.log(err))
             })
             .catch(err => { console.log(err) });
-    }, [id,ticketComments]);
+    }, [id]);
 
     const assignMe = (e) => {
         e.preventDefault();
@@ -65,6 +70,7 @@ const TicketView = () => {
                 .catch(err => console.log(err))
         }
     }
+
     const sendComment = (e) => {
         if (comment.length > 0) {
             axios.post("http://localhost:8000/api/comments", { user: user, ticket: ticket._id, text: comment }, { withCredentials: true })
